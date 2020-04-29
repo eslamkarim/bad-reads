@@ -1,40 +1,52 @@
 import React from 'react';
-import {Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import './nav.css';
+import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+ 
+import Login from './login';
+import Dashboard from './dashboard'
 
 const NavBar = () => {
     return(
-        <Navbar sticky="top" bg="light" expand="lg">
-            <Navbar.Brand href="/">
-            <img
-                src="/logo.png"
-                width="50"
-                height="40"
-                className="d-inline-block align-top"
-                alt="React Bootstrap logo"
-            />
-            <img
-                src="/badreads.png"
-                width="120"
-                height="40"
-                className="d-inline-block align-top"
-                alt="React Bootstrap logo"
-            />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#link">Link</Nav.Link>
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                    </NavDropdown>
-                </Nav>
-            </Navbar.Collapse>
-    </Navbar>
+        <BrowserRouter>
+        <header>
+    <nav>
+      <div className="logo">
+        <a href="/">
+          <img src="/images/logo.png" alt="" id="small-logo"/>
+          <img src="images/badreads.png" alt="" id="large-logo"/>
+        </a>
+        <h4>A Community<br/>For Book Haters</h4>
+      </div>
+      <ul className="main-nav">
+        <li><a href="/login">Login</a></li>
+        
+        <li>My Account
+          <ul className="drop">
+            <div className="menu-arrow"></div>
+            
+            <li><a href="#">Sign Out</a></li>
+          </ul>
+        </li>
+
+        <div className="search-bar">
+          <input type="text" name="" placeholder="Search Books" />
+          <button type="button" name="button" id="search"></button>
+        </div>
+
+      </ul>
+      
+
+      <button type="button" name="button" className="hamburger">&#9776;</button>
+
+    </nav>
+  </header>
+<div>
+  <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/dashboard" component={Dashboard} />
+        </Switch>
+    </div>
+  </BrowserRouter>
     );
     };
 
