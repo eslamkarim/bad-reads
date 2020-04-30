@@ -1,6 +1,7 @@
 import React, {Fragment, Component} from 'react';
 import './nav.css';
 import Navbar from 'react-bootstrap/Navbar';
+import { getUser } from '../utils/common';
 
  
 
@@ -17,7 +18,6 @@ class NavBar extends Component {
     componentWillMount(){
     }
     componentWillReceiveProps(nextprop){
-        console.log(nextprop);
         this.changeNav(nextprop); 
     }
 
@@ -28,10 +28,11 @@ class NavBar extends Component {
     }
     MavList;
     changeNav = (props) =>{
-        console.log(props);
         if(props.loggedIn){
+            const user = getUser();
             this.MavList = (
                 <Fragment>
+                    <p>welcome {user.firstName} {user.lastName}</p>
                 <li>My Account
                     <ul className="drop">
                         <div className="menu-arrow"></div>
@@ -48,6 +49,7 @@ class NavBar extends Component {
             this.MavList =(
                 <Fragment>
                     <li><a href="/login">Login</a></li>   
+                    <li><a href="/register">Register</a></li>   
                 </Fragment>
             );
         }

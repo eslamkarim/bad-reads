@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NavBar from './components/navbar';
 import Login from './components/login';
+import Register from './components/Register';
 import Logout from './components/logout';
 import Dashboard from './components/dashboard'
 
@@ -41,6 +42,7 @@ class App extends Component {
                     <Route exact path='/dashboard' component={Dashboard}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     
             </Switch>
