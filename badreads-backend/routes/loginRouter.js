@@ -33,10 +33,11 @@ router.get('/verifyToken', function (req, res) {
 router.post('/', async function(req,resp){
     const email = req.body.email;
     const pwd = req.body.password;
+    console.log(req);
     
     // return 400 status if username/password is not exist
     if (!email || !pwd) {
-      return res.status(400).json({
+      return resp.status(400).json({
         error: true,
         message: "Username or Password required."
       });

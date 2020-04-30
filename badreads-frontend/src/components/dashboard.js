@@ -5,16 +5,9 @@ function Dashboard(props) {
   const user = getUser();
   console.log(user);
   
-  // handle click event of logout button
-  const handleLogout = () => {
-    removeUserSession();
-    props.history.push('/login');
-  }
- 
   return (
     <div>
-      Welcome {user.firstName+" "+user.lastName}!<br /><br />
-      <input type="button" onClick={handleLogout} value="Logout" />
+      Welcome <br /><br />
     </div>
   );
 }

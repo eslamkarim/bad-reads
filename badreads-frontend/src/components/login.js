@@ -1,55 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, setState, Component } from 'react';
 import axios from 'axios';
-import { setUserSession } from '../utils/common';
+import { setUserSession, getUser } from '../utils/common';
+import NavBar from './navbar';
  
-function Login(props) {
-  const [loading, setLoading] = useState(false);
-  const username = useFormInput('');
-  const password = useFormInput('');
-  const [error, setError] = useState(null);
- 
-  // handle button click of login form
-  const handleLogin = () => {
-    setError(null);
-    setLoading(true);
-    axios.post('http://localhost:4000/login', { email: username.value, password: password.value }).then(response => {
-      setLoading(false);
+class Login extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      email:'',
+      password:''
+      }
+   }
+  
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value});
+  }
+  handlePasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+  checkUser(){
+    this.props.checkUser();
+  }
+  handleLogin = () => {
+    axios.post('http://localhost:4000/login', { email: this.state.email, password: this.state.password }).then(response => {
       setUserSession(response.data.token, response.data.user);
-      props.history.push('/dashboard');
+      this.checkUser();      
+      this.props.history.push('/dashboard');
     }).catch(error => {
-      setLoading(false);
-      if (error.response.status === 401) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
+      console.log(error);
     });
   }
- 
+
+
+render(){
   return (
     <div>
-      Login<br /><br />
-      <div>
-        Username<br />
-        <input type="text" {...username} autoComplete="new-password" />
-      </div>
-      <div style={{ marginTop: 10 }}>
-        Password<br />
-        <input type="password" {...password} autoComplete="new-password" />
-      </div>
-      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-      <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
+      <form>
+          <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
+          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+          <button type="button" onClick={this.handleLogin}>Login</button>
+        </form>
     </div>
   );
-}
- 
-const useFormInput = initialValue => {
-  const [value, setValue] = useState(initialValue);
- 
-  const handleChange = e => {
-    setValue(e.target.value);
-  }
-  return {
-    value,
-    onChange: handleChange
   }
 }
- 
+
 export default Login;

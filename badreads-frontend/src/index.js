@@ -1,17 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, {Component} from 'react';
+import './App.css';
+import { render } from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import NavBar from './components/navbar';
+import Login from './components/login';
+import Logout from './components/logout';
+import Dashboard from './components/dashboard'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {};  
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  componentWillMount(){
+      this.checkUser();
+  }
+
+  checkUser(){
+    if(sessionStorage.getItem('token') != null && sessionStorage.getItem('user') != null){
+      this.setState({loggedIn: true}); 
+    }else{
+      this.setState({loggedIn: false});
+    }
+  }
+
+  logOut() {
+    this.setState({loggedIn: false}); 
+    return null;
+  }
+
+  render() {
+    return (
+        <BrowserRouter>
+          <div>
+            <title>BadReads</title> 
+            <NavBar loggedIn={this.state.loggedIn} checkUser={this.checkUser} />
+            <Switch>
+                    {/*Routes need to be include in App.js otherwise root can't find the paths*/}
+                    <Route exact path='/dashboard' component={Dashboard}/>
+                    {/* <Route exact path='/categories' component={Categories}/> */}
+                    <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    
+            </Switch>
+          </div>  
+        </BrowserRouter>
+    );
+  }
+}
+
+render(<App/>, window.document.getElementById("root"));
