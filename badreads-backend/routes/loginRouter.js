@@ -44,10 +44,13 @@ router.post('/', async function(req,resp){
     }
     try{
         userData = await userModel.findOne({ email: email }).exec();
-
+        if(!userData){
+          return resp.status(401).send({error: true,  message: "The email is not found" });
+        }
+        
         userData.comparePassword(pwd, (error, match) => {
             if(!match) {
-                return response.status(400).send({ message: "The password is invalid" });
+                return resp.status(401).send({error: true, message: "The password is invalid" });
             }
         });
         const token = utils.generateToken(userData);
@@ -57,10 +60,9 @@ router.post('/', async function(req,resp){
         
         return resp.status(200).json({ user: userObj, token });
     }catch(error){
-        console.log(error);
         return resp.status(401).json({
             error: true,
-            message: error
+            message: error._message
         });
     }
 });

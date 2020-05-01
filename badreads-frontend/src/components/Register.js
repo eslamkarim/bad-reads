@@ -1,7 +1,7 @@
-import React, { useState, setState, Component } from 'react';
+import React, { useState, setState, Component, Fragment } from 'react';
 import axios from 'axios';
 import { setUserSession, getUser } from '../utils/common';
-import NavBar from './navbar';
+import './login.css'
  
 class Register extends Component {
   constructor(props){
@@ -11,7 +11,9 @@ class Register extends Component {
         lastName:'',
         email: '', 
         password: '',
-        confirmPassword:''
+        confirmPassword:'',
+        error:'',
+        errorStatus: false
       }
    }
    handlefirstNameChange = (e) => {
@@ -45,23 +47,62 @@ class Register extends Component {
       this.checkUser();      
       this.props.history.push('/dashboard');
     }).catch(error => {
-      console.log(error);
-    });
+        this.setState({error: error.response.data.message});
+        this.setState({errorStatus: error.response.data.error});    });
+  }
+
+  WarningBanner = () => {
+    if (!this.state.errorStatus) {
+      return null;
+    }
+  
+    return (
+      <Fragment>
+      <div className="alert alert-danger" role="alert">
+        {this.state.error}
+      </div>
+      </Fragment>
+    );
   }
 
 
 render(){
   return (
-    <div>
+
+    <div className="login-form">    
       <form>
-          <input type="text" name="firstName" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />
-          <input type="text" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
-          <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
-          <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
-          <button type="button" onClick={this.handleSignup}>Register</button>
-        </form>
+        <div className="avatar"><i className="material-icons">&#xE7FF;</i></div>
+        <h4 className="modal-title">Make a new account</h4>
+        <this.WarningBanner />
+          <div className="form-group">
+            <input type="text" className="form-control" name="firstName" required="required" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />          
+          </div>
+          <div className="form-group">
+            <input type="text" className="form-control" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
+          </div>
+          <div className="form-group">
+            <input type="text" className="form-control" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
+          </div>
+          <div className="form-group">
+            <input type="password" className="form-control" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+          </div>
+          <div className="form-group">
+            <input type="password" className="form-control" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
+          </div>
+          <button className="btn btn-primary btn-block btn-lg" type="button" onClick={this.handleSignup}>Register</button>             
+      </form>			
+      <div className="text-center small">Have an account? <a href="/login">Sign In</a></div>
     </div>
+    // <div>
+    //   <form>
+    //       <input type="text" name="firstName" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />
+    //       <input type="text" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
+    //       <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
+    //       <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+    //       <input type="password" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
+    //       <button type="button" onClick={this.handleSignup}>Register</button>
+    //     </form>
+    // </div>
   );
   }
 }

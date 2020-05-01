@@ -9,7 +9,7 @@ router.post('/',async function(req, resp) {
         if(req.body.confirmPassword != req.body.password){
             return resp.status(401).json({
                 error: true,
-                message: "passwords is not the same!"
+                message: "passwords are not the same!"
             });
         }else{   
             var user = await userModel.create(req.body);
@@ -20,7 +20,7 @@ router.post('/',async function(req, resp) {
         console.log(err);
         return resp.status(401).json({
             error: true,
-            message: err
+            message: err._message
         });
     }
   });
