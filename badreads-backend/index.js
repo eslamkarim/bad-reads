@@ -5,9 +5,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken');
-
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
+const authorRouter = require("./routes/authorRoute");
 
 
 var app = express();
@@ -20,7 +20,10 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//////////////////////////
+mongoose.set('useFindAndModify', false);
 
+////////////////
 app.use(function (req, res, next) {
     // check header or url parameters or post parameters for token
     var token = req.headers['authorization'];
@@ -44,7 +47,7 @@ app.use(function (req, res, next) {
   
 app.use('/login',loginRouter);
 app.use('/register',registerRouter);
-
+app.use('/author',authorRouter);
 
 
 app.listen(4000, function () {
