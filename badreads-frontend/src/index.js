@@ -6,6 +6,8 @@ import Login from './components/login';
 import Register from './components/Register';
 import Logout from './components/logout';
 import Dashboard from './components/dashboard'
+import Author from './components/author'
+import AuthorId from './components/authorId'
 import Book_Page from './components/Book_Page'
 import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
@@ -42,6 +44,8 @@ class App extends Component {
             <Switch>
                     {/*Routes need to be include in App.js otherwise root can't find the paths*/}
                     <Route exact path='/dashboard' component={Dashboard}/>
+                    <Route exact path='/author' component={Author}/>
+                    <Route exact path='/author/:id' component={AuthorId}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
