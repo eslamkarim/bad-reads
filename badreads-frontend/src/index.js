@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar';
 import Login from './components/login';
 import Register from './components/Register';
@@ -8,6 +8,9 @@ import Logout from './components/logout';
 import Dashboard from './components/dashboard'
 import Author from './components/author'
 import AuthorId from './components/authorId'
+import Book_Page from './components/Book_Page'
+import Book from './components/Book'
+import PageNotFound from './components/404/PageNotFound'
 
 class App extends Component {
   constructor(props){
@@ -47,7 +50,13 @@ class App extends Component {
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
+
+                    <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
+                    <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                     
+
+                    <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />
+                    <Redirect to="/404" />
             </Switch>
           </div>  
         </BrowserRouter>
