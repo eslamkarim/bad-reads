@@ -57,19 +57,26 @@ class NavBar extends Component {
     render(){
         console.log(this.props);
         return(
-            <Navbar>
-        <div className="logo">
-            <a href="/">
-            <img src="/images/logo.png" alt="" id="small-logo"/>
-            <img src="images/badreads.png" alt="" id="large-logo"/>
-            </a>
-            <h4>A Community<br/>For Book Haters</h4>
-        </div>
-        <ul className="main-nav">
-            { this.MavList }
-        </ul>
-        <button type="button" name="button" className="hamburger">&#9776;</button>
-        </Navbar>
+             <Navbar>
+                <div className="logo">
+                    <a href="/">
+                    <img src="/images/logo.png" alt="" id="small-logo"/>
+                    <img src="images/badreads.png" alt="" id="large-logo"/>
+                    </a>
+                    <h4>A Community<br/>For Book Haters</h4>
+                    <a href="/author">
+                    <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
+                    <h5>Authors</h5>
+                    </a>
+                </div>
+            
+
+                <ul className="main-nav">
+                    { this.MavList }
+                </ul>
+                <button type="button" name="button" className="hamburger">&#9776;</button>
+
+            </Navbar>
         );
     }
 }

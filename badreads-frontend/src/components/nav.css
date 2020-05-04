@@ -204,6 +204,14 @@
       font-weight: 100;
       margin-left: 15px;
       display: none; }
+    .logo h5 {
+      font-weight: 100;
+      margin-left: 27px;
+    }
+    #small-logo1 {
+      height: 40px;
+      margin-left: 40px;
+     }
   
   @media (min-width: 1000px) {
     .logo #large-logo {
