@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authorModel = require('../models/author')
 
-router.get('/', async (req , res )=>{
+ router.get('/', async  (req , res )=>{
     try {
         const authors = await authorModel.find({}).populate('author')
         return res.json(authors)
@@ -26,6 +26,8 @@ router.get('/:id',async(req , res)=>{
 })
 
 router.post('/',async(req , res)=>{
+    console.log(req.body);
+    
     try {
         console.log("booooooooooooooooooooooooooooooy");
         
