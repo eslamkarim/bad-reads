@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authorModel = require('../models/author')
+const categoryModel = require('../models/category.js')
 
 router.get('/', async (req , res )=>{
     try {
-        const authors = await authorModel.find({}).populate('author')
-        return res.json(authors)
+        const categorys = await categoryModel.find({})
+        return res.json(categorys)
         
     } catch (error) {
         res.send(error)
@@ -16,8 +16,8 @@ router.get('/', async (req , res )=>{
 router.get('/:id',async(req , res)=>{
     id = req.params.id
     try {
-        const authors = await authorModel.findById(id)
-        res.json(authors)
+        const categorys = await categoryModel.findById(id)
+        res.json(categorys)
         
     } catch (error) {
         res.send(error)
@@ -26,11 +26,11 @@ router.get('/:id',async(req , res)=>{
 })
 
 router.post('/',async(req , res)=>{
-    try {
-        console.log("booooooooooooooooooooooooooooooy");
-        
-        const authors = await authorModel.create(req.body)
-        return res.json(authors)
+    console.log(req.body.categoryName);
+    
+    try {        
+        const categorys = await categoryModel.create(req.body)
+        return res.json(categorys)
         
     } catch (error) {
         

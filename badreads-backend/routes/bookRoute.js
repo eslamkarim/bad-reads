@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authorModel = require('../models/author')
+const bookModel = require('../models/book.js')
 
 router.get('/', async (req , res )=>{
     try {
-        const authors = await authorModel.find({}).populate('author')
-        return res.json(authors)
+        const books = await bookModel.find({}).populate('author','category')
+        return res.json(books)
         
     } catch (error) {
         res.send(error)
@@ -16,8 +16,8 @@ router.get('/', async (req , res )=>{
 router.get('/:id',async(req , res)=>{
     id = req.params.id
     try {
-        const authors = await authorModel.findById(id)
-        res.json(authors)
+        const books = await bookModel.findById(id)
+        res.json(books)
         
     } catch (error) {
         res.send(error)
@@ -26,11 +26,9 @@ router.get('/:id',async(req , res)=>{
 })
 
 router.post('/',async(req , res)=>{
-    try {
-        console.log("booooooooooooooooooooooooooooooy");
-        
-        const authors = await authorModel.create(req.body)
-        return res.json(authors)
+    try {        
+        const books = await bookModel.create(req.body)
+            return res.json(books)
         
     } catch (error) {
         
