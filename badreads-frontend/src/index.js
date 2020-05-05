@@ -55,6 +55,7 @@ class App extends Component {
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                      */}
 
+
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Redirect to="/404" />
             </Switch>

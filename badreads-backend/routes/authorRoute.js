@@ -32,7 +32,7 @@ router.post('/',async(req , res)=>{
         console.log("booooooooooooooooooooooooooooooy");
         
         const authors = await authorModel.create(req.body)
-            return res.json(authors)
+        return res.json(authors)
         
     } catch (error) {
         

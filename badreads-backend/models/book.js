@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
 
 const bookSchema = new mongoose.Schema({
-  bookId: {type: Number},
-  bookName: {type: String, required: [true,"Book name is required"]},
+  bookId: {type: Number, unique: true},
+  bookName: {type: String, required: [true,"Book name is required"], unique: [true,"This book name is alredy exists"]},
   bookImage: {type: String, required: [true,"Book image is required"]},
   bookDescription: {type: String, required: [true,"Book description is required"]},
   rating: {type: Number, default:-1},
-  author: {type: mongoose.Schema.Types.ObjectId, ref = 'Author'}
+  author: {type: mongoose.Schema.Types.ObjectId, ref : 'Author'},
+  category: {type: mongoose.Schema.Types.ObjectId, ref : 'Category'}
+
 })
 
 
@@ -23,4 +25,4 @@ const bookModel = mongoose.model('Book',bookSchema)
 // })
 
 
-module.exports(bookModel)
+module.exports = bookModel
