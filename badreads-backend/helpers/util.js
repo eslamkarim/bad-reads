@@ -12,6 +12,7 @@ function generateToken(user) {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
+    img: user.img,
     isAdmin: user.isAdmin
   };
  
@@ -29,6 +30,7 @@ function getCleanUser(user) {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
+    img: user.img,
     isAdmin: user.isAdmin
   };
 }

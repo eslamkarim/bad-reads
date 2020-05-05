@@ -12,6 +12,7 @@ class Register extends Component {
         email: '', 
         password: '',
         confirmPassword:'',
+        file:null,
         error:'',
         errorStatus: false
       }
@@ -32,17 +33,24 @@ class Register extends Component {
   handleconfirmPasswordPasswordChange = (e) => {
     this.setState({confirmPassword: e.target.value});
   }
+  handleImageChange=event=>{  
+    this.setState({file: event.target.files[0]});    
+}
   checkUser(){
     this.props.checkUser();
   }
   handleSignup = () => {
-    axios.post('http://localhost:4000/register', { 
-                firstName:this.state.firstName,
-                lastName:this.state.lastName,
-                email: this.state.email, 
-                password: this.state.password,
-                confirmPassword:this.state.confirmPassword, 
-            }).then(response => {
+    var formData = new FormData();
+    formData.append("firstName",this.state.firstName)
+    formData.append("lastName",this.state.lastName)
+    formData.append("email",this.state.email)
+    formData.append("password",this.state.password)
+    formData.append("confirmPassword",this.state.confirmPassword)
+    formData.append("file",this.state.file)
+    axios.post('http://localhost:4000/register', formData ,{
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }}).then(response => {
       setUserSession(response.data.token, response.data.user);
       this.checkUser();      
       this.props.history.push('/dashboard');
@@ -55,7 +63,6 @@ class Register extends Component {
     if (!this.state.errorStatus) {
       return null;
     }
-  
     return (
       <Fragment>
       <div className="alert alert-danger" role="alert">
@@ -66,9 +73,8 @@ class Register extends Component {
   }
 
 
-render(){
+render(){  
   return (
-
     <div className="login-form">    
       <form>
         <div className="avatar"><i className="material-icons">&#xE7FF;</i></div>
@@ -88,6 +94,9 @@ render(){
           </div>
           <div className="form-group">
             <input type="password" className="form-control" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
+          </div>
+          <div className="form-group">
+            <input type="file" name="image" onChange={this.handleImageChange}/>
           </div>
           <button className="btn btn-primary btn-block btn-lg" type="button" onClick={this.handleSignup}>Register</button>             
       </form>			

@@ -3,7 +3,7 @@ const Bcrypt = require('bcrypt')
 const userSchema = new mongoose.Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
-    imgUrl: {type: String},
+    img: {type: String},
     email: {type: String, required: true, match: /^[\w.]+@\w+\.\w+$/, unique: true},
     password: {type: String, required: true},
     isAdmin: {type: Boolean, default: false}
