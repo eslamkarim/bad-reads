@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
 const authorRouter = require("./routes/authorRoute");
+const adminRouter = require('./routes/admin')
 const bookRouter = require("./routes/bookRoute");
 const categoryRouter = require("./routes/categoryRoute");
 
@@ -51,6 +52,7 @@ app.use(function (req, res, next) {
 app.use('/login',loginRouter);
 app.use('/register',registerRouter);
 app.use('/author',authorRouter);
+app.use('/admin',adminRouter);
 app.use('/book',bookRouter);
 app.use('/category',categoryRouter);
 
