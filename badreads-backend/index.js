@@ -8,10 +8,13 @@ const jwt = require('jsonwebtoken');
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
 const authorRouter = require("./routes/authorRoute");
+const bookRouter = require("./routes/bookRoute");
+const categoryRouter = require("./routes/categoryRoute");
 
 
 var app = express();
 mongoose.connect('mongodb://localhost:27017/badReads',{auth: {"authSource": "admin"}, user: "admin", pass: "123456", useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useCreateIndex', true);
 
 app.use(express.json());
 app.use(cors());
@@ -48,6 +51,9 @@ app.use(function (req, res, next) {
 app.use('/login',loginRouter);
 app.use('/register',registerRouter);
 app.use('/author',authorRouter);
+app.use('/book',bookRouter);
+app.use('/category',categoryRouter);
+
 
 
 app.listen(4000, function () {
