@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require("./routes/registerRouter");
 const authorRouter = require("./routes/authorRoute");
+const adminRouter = require('./routes/admin')
 
 
 var app = express();
@@ -48,7 +49,7 @@ app.use(function (req, res, next) {
 app.use('/login',loginRouter);
 app.use('/register',registerRouter);
 app.use('/author',authorRouter);
-
+app.use('/admin',adminRouter);
 
 app.listen(4000, function () {
     console.log('listening on port 4000!');
