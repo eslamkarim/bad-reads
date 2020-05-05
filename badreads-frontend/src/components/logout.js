@@ -5,12 +5,9 @@ class Logout extends Component{
     componentDidMount(){
         removeUserSession();
         this.props.checkUser();
-        console.log("this is logout component");
     }
 
     render(){
-
-        console.log("logout render function");
         return(
             <div>
                 Now loggedOut; 

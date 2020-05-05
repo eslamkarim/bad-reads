@@ -1,6 +1,6 @@
-import React, { useState, setState, Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { setUserSession, getUser } from '../utils/common';
+import { setUserSession } from '../utils/common';
 import './login.css'
  
 class Register extends Component {
@@ -17,7 +17,7 @@ class Register extends Component {
         errorStatus: false
       }
    }
-   handlefirstNameChange = (e) => {
+  handlefirstNameChange = (e) => {
     this.setState({firstName: e.target.value});
   }
   handlelastNameChange = (e) => {
@@ -26,16 +26,15 @@ class Register extends Component {
   handleEmailChange = (e) => {
     this.setState({email: e.target.value});
   }
-  
   handlePasswordChange = (e) => {
     this.setState({password: e.target.value});
   }
   handleconfirmPasswordPasswordChange = (e) => {
     this.setState({confirmPassword: e.target.value});
   }
-  handleImageChange=event=>{  
-    this.setState({file: event.target.files[0]});    
-}
+  handleImageChange=(e)=>{  
+    this.setState({file: e.target.files[0]});    
+  }
   checkUser(){
     this.props.checkUser();
   }
@@ -47,16 +46,18 @@ class Register extends Component {
     formData.append("password",this.state.password)
     formData.append("confirmPassword",this.state.confirmPassword)
     formData.append("file",this.state.file)
-    axios.post('http://localhost:4000/register', formData ,{
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }}).then(response => {
+    axios.post('http://localhost:4000/register', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(response => {
       setUserSession(response.data.token, response.data.user);
-      this.checkUser();      
+      this.checkUser();
       this.props.history.push('/dashboard');
     }).catch(error => {
-        this.setState({error: error.response.data.message});
-        this.setState({errorStatus: error.response.data.error});    });
+      this.setState({ error: error.response.data.message });
+      this.setState({ errorStatus: error.response.data.error });
+    });
   }
 
   WarningBanner = () => {
@@ -73,46 +74,36 @@ class Register extends Component {
   }
 
 
-render(){  
-  return (
-    <div className="login-form">    
-      <form>
-        <div className="avatar"><i className="material-icons">&#xE7FF;</i></div>
-        <h4 className="modal-title">Make a new account</h4>
-        <this.WarningBanner />
-          <div className="form-group">
-            <input type="text" className="form-control" name="firstName" required="required" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />          
-          </div>
-          <div className="form-group">
-            <input type="text" className="form-control" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
-          </div>
-          <div className="form-group">
-            <input type="text" className="form-control" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
-          </div>
-          <div className="form-group">
-            <input type="password" className="form-control" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
-          </div>
-          <div className="form-group">
-            <input type="password" className="form-control" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
-          </div>
-          <div className="form-group">
-            <input type="file" name="image" onChange={this.handleImageChange}/>
-          </div>
-          <button className="btn btn-primary btn-block btn-lg" type="button" onClick={this.handleSignup}>Register</button>             
-      </form>			
-      <div className="text-center small">Have an account? <a href="/login">Sign In</a></div>
-    </div>
-    // <div>
-    //   <form>
-    //       <input type="text" name="firstName" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />
-    //       <input type="text" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
-    //       <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
-    //       <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
-    //       <input type="password" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
-    //       <button type="button" onClick={this.handleSignup}>Register</button>
-    //     </form>
-    // </div>
-  );
+  render(){  
+    return (
+      <div className="login-form">    
+        <form>
+          <div className="avatar"><i className="material-icons">&#xE7FF;</i></div>
+          <h4 className="modal-title">Make a new account</h4>
+          <this.WarningBanner />
+            <div className="form-group">
+              <input type="text" className="form-control" name="firstName" required="required" placeholder="first Name" value={this.state.firstName} onChange={this.handlefirstNameChange} />          
+            </div>
+            <div className="form-group">
+              <input type="text" className="form-control" name="lastName" placeholder="last Name" value={this.state.lastName} onChange={this.handlelastNameChange} />
+            </div>
+            <div className="form-group">
+              <input type="text" className="form-control" name="email" placeholder="Email" value={this.state.email} onChange={this.handleEmailChange} />
+            </div>
+            <div className="form-group">
+              <input type="password" className="form-control" name="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange}/>
+            </div>
+            <div className="form-group">
+              <input type="password" className="form-control" name="confirmPassword" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleconfirmPasswordPasswordChange}/>
+            </div>
+            <div className="form-group">
+              <input type="file" name="image" onChange={this.handleImageChange}/>
+            </div>
+            <button className="btn btn-primary btn-block btn-lg" type="button" onClick={this.handleSignup}>Register</button>             
+        </form>			
+        <div className="text-center small">Have an account? <a href="/login">Sign In</a></div>
+      </div>
+    );
   }
 }
 

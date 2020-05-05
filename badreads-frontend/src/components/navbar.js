@@ -32,17 +32,22 @@ class NavBar extends Component {
             const user = getUser();
             this.MavList = (
                 <Fragment>
-                    <p>welcome {user.firstName} {user.lastName}</p>
-                <li>My Account
-                    <ul className="drop">
-                        <div className="menu-arrow"></div>
-                        <li><a href="/logout">Sign Out</a></li>
-                    </ul>
-                </li>
-                <div className="search-bar">
-                <input type="text"  placeholder="Search Books" />
-                <button type="button" name="button" id="search"></button>
-                </div>
+                    <li>
+                        <a href="/author">
+                        <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
+                        Authors
+                        </a>
+                    </li>
+                    <li>welcome {user.firstName} {user.lastName}
+                        <ul className="drop">
+                            <div className="menu-arrow"></div>
+                            <li><a href="/logout">Sign Out</a></li>
+                        </ul>
+                    </li>
+                    <div className="search-bar">
+                    <input type="text"  placeholder="Search Books" />
+                    <button type="button" name="button" id="search"></button>
+                    </div>
                 </Fragment>
             );
         }else{
@@ -70,12 +75,6 @@ class NavBar extends Component {
 
                 <ul className="main-nav">
                     { this.MavList }
-                    <li>
-                        <a href="/author">
-                        <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
-                        Authors
-                        </a>
-                    </li>
                 </ul>
                 <button type="button" name="button" className="hamburger">&#9776;</button>
 

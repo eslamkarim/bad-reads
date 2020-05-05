@@ -1,6 +1,6 @@
-import React, { useState, setState, Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { setUserSession, getUser } from '../utils/common';
+import { setUserSession } from '../utils/common';
 import './login.css'
  
 class Login extends Component {
