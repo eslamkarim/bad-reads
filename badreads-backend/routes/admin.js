@@ -3,6 +3,9 @@ const authModel = require('../models/author')
 const bookModel =require('../models/book')
 const categoryModel= require('../models/category')
 const router = express.Router()
+const utils = require('../helpers/util.js');
+const userModel = require('../models/user.js')
+
 router.get('/author',async(req,res)=>{
 
    try{
@@ -193,6 +196,43 @@ router.get('/book',async(req,res)=>{
      
  })
  
+ router.post('/login', async function(req,resp){
+    const email = req.body.email;
+    const pwd = req.body.password;
+    
+    // return 400 status if username/password is not exist
+    if (!email || !pwd) {
+      return resp.status(400).json({
+        error: true,
+        message: "Username or Password required."
+      });
+    }
+    try{
+        userData = await userModel.findOne({ email: email }).exec();
+        if(!userData){
+          return resp.status(401).send({error: true,  message: "The email is not found" });
+        }
+        if(!userData.isAdmin){
+            return resp.status(401).send({error: true,  message: "The email is not an admin" });
+        }
+        userData.comparePassword(pwd, (error, match) => {
+            if(!match) {
+                return resp.status(401).send({error: true, message: "The password is invalid" });
+            }
+        });
 
+        const token = utils.generateToken(userData);
+        // get basic user details
+        const userObj = utils.getCleanUser(userData);
+        // return the token along with user details
+        
+        return resp.status(200).json({ user: userObj, token });
+    }catch(error){
+        return resp.status(401).json({
+            error: true,
+            message: error._message
+        });
+    }
+});
 module.exports = router
 

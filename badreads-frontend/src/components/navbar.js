@@ -53,7 +53,8 @@ class NavBar extends Component {
         }else{
             this.MavList =(
                 <Fragment>
-                    <li><a href="/login">Login</a></li>   
+                    <li><a href="/login">Login</a></li>  
+                    <li><a href="/admin/login">Admin panel</a></li>    
                     <li><a href="/register">Register</a></li>   
                 </Fragment>
             );

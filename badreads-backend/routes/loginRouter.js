@@ -4,9 +4,6 @@ const jwt = require('jsonwebtoken');
 const utils = require('../helpers/util.js');
 const userModel = require('../models/user.js')
 
-router.get('/', function(req, resp){
-    return resp.status(200).send("login admin route works");
-});
 
 router.get('/verifyToken', function (req, res) {
     // check header or url parameters or post parameters for token
@@ -33,7 +30,6 @@ router.get('/verifyToken', function (req, res) {
 router.post('/', async function(req,resp){
     const email = req.body.email;
     const pwd = req.body.password;
-    console.log(req);
     
     // return 400 status if username/password is not exist
     if (!email || !pwd) {
