@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './data-table';
+import './author.css'
 
 export default class Users extends Component {
 
@@ -27,10 +28,13 @@ export default class Users extends Component {
 
     render() {
         return (
-            <div  >
-                
-                 {this.dataTable()}
-                        
+            <div className="i-am-centered" >
+
+                <div className="row boy" >
+
+                    {this.dataTable()}
+
+                </div>
             </div>
         )
     }
