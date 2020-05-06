@@ -43,7 +43,9 @@ router.post('/', async function(req,resp){
         if(!userData){
           return resp.status(401).send({error: true,  message: "The email is not found" });
         }
-        
+        if(userData.isAdmin){
+          return resp.status(401).send({error: true,  message: "you are an admin please use the admin panel!" });
+        }
         userData.comparePassword(pwd, (error, match) => {
             if(!match) {
                 return resp.status(401).send({error: true, message: "The password is invalid" });
