@@ -14,6 +14,8 @@ export default class Users extends Component {
         axios.get('http://localhost:4000/author')
             .then(res => {
                 this.setState({ usersCollection: res.data });
+                console.log(res.data);
+                
             })
             .catch(function (error) {
                 console.log(error);
