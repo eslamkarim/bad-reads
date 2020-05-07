@@ -5,6 +5,8 @@ import axios from 'axios';
 import HomeCategoryTable from './homeCategoryTable';
 import HomeAuthorTable from './HomeAuthorTable';
 import HomeBookTable from './HomeBookTable';
+import './author.css'
+
 
 
 export default class Home extends Component {
@@ -80,19 +82,43 @@ export default class Home extends Component {
 
     render() {
         return ( 
-            < div >
+            <center>
+                <h1 className="grad">Pobular Books</h1>
+                <div className="i-am-centered" >
+                    <div className="row boy" >
+                    
+                        {
+                            this.homeBookTable()
+                        }
 
-                {
-                    this.homeCategoryTable()
-                }
-                {
-                    this.homeAuthorTable()
-                }
-                {
-                    this.homeBookTable()
-                }
+                    </div>
+                </div>
+        
+                <h1 className="grad">Pobular Categories</h1>
+                <div className="i-am-centered" >
 
-            </div>
+                    <div className="row boy" >
+                        {
+                            this.homeCategoryTable()
+                        }
+                    
+
+                    </div>
+                </div>
+                
+                
+                <h1 className="grad">Pobular Authors</h1>
+                <div className="i-am-centered" >
+
+                    <div className="row boy" >
+                        {
+                            this.homeAuthorTable()
+                        }
+
+
+                    </div>
+                </div>
+            </center>
         )
     }
 }
