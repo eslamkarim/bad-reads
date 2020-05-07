@@ -43,9 +43,6 @@
       position: absolute;
       top: 5px;
       left: 10px; }
-    .main-nav img {
-      width: 20px;
-      margin-bottom: 2px; }
   
   @media (min-width: 767px) {
     .main-nav {
@@ -158,10 +155,13 @@
     .search-bar :-moz-placeholder {
       font-size: 1rem; } }
   
-  
-  
-  
-  
+  .avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
   
   h1, h2, h3, h4, h5, h6, p, a, ul, ol, li {
     margin: 0;

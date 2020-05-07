@@ -38,7 +38,8 @@ class NavBar extends Component {
                         Authors
                         </a>
                     </li>
-                    <li>welcome {user.firstName} {user.lastName}
+                    <li><img src={user.img} alt="Avatar" className="avatar"/>
+                         {user.firstName} {user.lastName}
                         <ul className="drop">
                             <div className="menu-arrow"></div>
                             <li><a href="/logout">Sign Out</a></li>
@@ -53,7 +54,8 @@ class NavBar extends Component {
         }else{
             this.MavList =(
                 <Fragment>
-                    <li><a href="/login">Login</a></li>   
+                    <li><a href="/login">Login</a></li>  
+                    <li><a href="/admin/login">Admin panel</a></li>    
                     <li><a href="/register">Register</a></li>   
                 </Fragment>
             );

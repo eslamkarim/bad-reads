@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar';
 import Login from './components/login';
+import AdminLogin from './components/adminLogin';
 import Register from './components/Register';
 import Logout from './components/logout';
 import Dashboard from './components/dashboard'
@@ -12,7 +13,10 @@ import AuthorId from './components/authorId'
 // import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
+
 import UsersId from './components/authorsId'
+
+import Home from './components/home'
 
 class App extends Component {
   constructor(props){
@@ -50,8 +54,10 @@ class App extends Component {
                     <Route exact path='/author/:id' component={UsersId}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    <Route exact path='/admin/login' render={(props) => <AdminLogin {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    <Route exact path='/' component={Home}/>
 
                     {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
