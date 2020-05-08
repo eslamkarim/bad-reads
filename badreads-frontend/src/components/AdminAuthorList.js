@@ -63,7 +63,7 @@ onSubmit = () => {
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>
+  <Button onClick={this.onSubmit}>+
  </Button>
 </>
   
