@@ -63,11 +63,10 @@ class App extends Component {
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
 
-                    <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
-                    {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
-                    <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} /> */}
+                    <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
+                    <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                     
 
 
