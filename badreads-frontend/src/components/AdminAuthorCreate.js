@@ -32,6 +32,7 @@ handleAuthor = () => {
       'Content-Type': 'multipart/form-data'
     }
   }).then(response => {
+    this.props.history.push('/admin/author')
       console.log(response);
       console.log(response.data);
     }).catch(error => {
