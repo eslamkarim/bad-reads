@@ -64,8 +64,24 @@
     transition:0.5s;
     cursor:pointer;
     border-radius: 25px;
-
+    padding: 15px;
+    
   }
+  .item-card-cat{
+    transition:0.5s;
+    cursor:pointer;
+    border-radius: 25px;
+    padding: 15px;
+    overflow-y: scroll;
+    height: 300px;
+  }
+  .item-card-cat::-webkit-scrollbar {
+    display: none;
+}
+
+.item-card-cat {
+    -ms-overflow-style: none;
+}
   .item-card-bookname{
     transition:1s;
     cursor:pointer;

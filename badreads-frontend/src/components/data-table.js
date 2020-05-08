@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route, Redirect, Router } from 'react-router-dom';
-import UsersId from './authorsId'
-
 import './author.css'
-import axios from 'axios';
 
 class DataTable extends Component {
 
