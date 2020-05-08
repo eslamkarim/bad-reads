@@ -16,7 +16,7 @@ router.get('/', async (req , res )=>{
 router.get('/:id',async(req , res)=>{
     id = req.params.id
     try {
-        const books = await bookModel.findById(id)
+        const books = await bookModel.findById(id).populate('author','authorName').populate('category','categoryName')
         res.json(books)
         
     } catch (error) {
@@ -28,7 +28,7 @@ router.get('/:id',async(req , res)=>{
 router.post('/',async(req , res)=>{
     try {        
         const books = await bookModel.create(req.body)
-            return res.json(books)
+        return res.json(books)
         
     } catch (error) {
         
