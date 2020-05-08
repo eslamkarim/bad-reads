@@ -12,7 +12,6 @@ export default class UsersId extends Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
-        console.log(id);
 
         axios.get(`http://localhost:4000/author/${id}`)
             .then(res => {
