@@ -78,10 +78,8 @@ onSubmit = () => {
     </tr>
   </thead>
   <tbody>
-<tr>
   
 {authorlist}
-</tr>
   
   
   </tbody>

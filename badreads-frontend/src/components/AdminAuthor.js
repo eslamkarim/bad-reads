@@ -9,14 +9,14 @@ class AdminAuthor extends Component{
    
       
       
-   
+   <tr>
       <td>{this.props.details._id}</td>
       <td>{this.props.details.authorName}</td>
       <td>{this.props.details.img}</td>
       <td>{this.props.details.date_of_birth}</td>
      
       <td><button>Update</button> <button>Delete</button></td>
- 
+ </tr>
    
  </Fragment>
 
