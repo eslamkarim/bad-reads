@@ -44,7 +44,7 @@ router.get('/author',async(req,res)=>{
 
  
  router.post('/author',upload.single('img'),async(req,res)=>{
-     const url = req.protocol + '://' + req.get('host') + 'authors' + req.file.originalname 
+     const url = req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname 
      const {authorName,date_of_birth} = req.body;
      console.log(authorName);
     const authorInstance = new authModel({
