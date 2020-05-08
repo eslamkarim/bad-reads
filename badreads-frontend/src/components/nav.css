@@ -48,6 +48,7 @@
 
 .main-nav li:hover .drop {
   display: block;
+  z-index: 1;
 }
 
 .main-nav .menu-arrow {

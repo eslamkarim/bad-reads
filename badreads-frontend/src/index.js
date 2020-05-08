@@ -62,6 +62,7 @@ class App extends Component {
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
+                    { getUser() && <Route exact path='/home' component={Home}/>}
 
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                      <Route exact path='/admin/author' component={AdminAuthorList}/>

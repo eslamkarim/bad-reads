@@ -33,19 +33,22 @@ class NavBar extends Component {
             this.MavList = (
                 <Fragment>
                     <li>
+                        <a href="/home">
+                        {/* <img src="/images/house.svg" alt="" id="small-logo1"/> */}
+                        Home
+                        </a>
+                    </li>
+                    <li>
                         <a href="/author">
                         <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
                         Authors
                         </a>
                     </li>
                     <li>
-                        <a href="/home">
-                        {/* <img src="/images/house.svg" alt="" id="small-logo1"/> */}
-                        Home
-                        </a>
-                    </li>
-                    <li><img src={user.img} alt="Avatar" className="avatar"/>
+                        <a href="/">
+                        <img src={user.img} alt="Avatar" className="avatar"/>
                          {user.firstName} {user.lastName}
+                        </a>
                         <ul className="drop">
                             <div className="menu-arrow"></div>
                             <li><a href="/logout">Sign Out</a></li>

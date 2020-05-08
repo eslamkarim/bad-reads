@@ -86,14 +86,18 @@ export default class Home extends Component {
   render() {
       return ( 
         <div className="parent">
-            <div id="mySidenav" className="sidenav">
-              <a href="#">About</a>
-              <a href="#">Services</a>
-              <a href="#">Clients</a>
-              <a href="#">Contact</a>
+            <h1 className="grad">Pobular Books</h1>
+            <div className="mySidenav sidenav">
+              <div className="sidenav" >
+                <ul className="navul">
+                  <li className="navulli"><span className="navullispan">Home</span></li>
+                  <li className="navulli"><span className="navullispan">Products</span></li>
+                  <li className="navulli"><span className="navullispan">Services</span></li>
+                  <li className="navulli"><span className="navullispan">Contact</span></li>
+                </ul>
+              </div>
             </div>
             <div>
-                <h1 className="grad">Pobular Books</h1>
                 <div className="i-am-centered" >
                     <div className="row boy" >
                     
