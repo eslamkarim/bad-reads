@@ -5,15 +5,13 @@ class HomeCategoryTable extends Component {
 
     render() {
         return (
-            <center>
-                <div className="card">
-                    <div className="container">
-                        <span>category Name :</span> {this.props.obj.categoryName}
-                        <br/>
-                        <span>Category Description :</span>{this.props.obj.categoryDescription}
-                    </div>
+            <div className="col-md-3 col-sm-6 item">
+                <div className="card item-card card-block">
+                        {/* <img className="img" src={this.props.obj.img} /> */}
+                        <h1 className="item-card-title mt-3 mb-3"> {this.props.obj.categoryName}</h1>
+                        <p className="img"><span>Birth Date :</span>{this.props.obj.categoryDescription}</p> 
                 </div>
-            </center>
+            </div>
         );
     }
 }

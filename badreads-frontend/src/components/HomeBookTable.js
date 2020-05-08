@@ -5,15 +5,14 @@ class HomeAuthorTable extends Component {
 
     render() {
         return (
-            <center>
-                <div className="card">
-                    <div className="container">
-                        <span>Book Name :</span> {this.props.obj.bookName}
-                        <br/>
-                        <span>Book Description :</span>{this.props.obj.bookDescription}
-                    </div>
+
+            <div className="col-md-3 col-sm-6 item">
+                <div className="card item-card card-block">
+                        <img className="img" src={this.props.obj.img} />
+                        <h1 className="item-card-title mt-3 mb-3"> {this.props.obj.bookName}</h1>
+                        {/* <p className="card-text"><span>Birth Date :</span>{this.props.obj.date_of_birth}</p>  */}
                 </div>
-            </center>
+            </div>
         );
     }
 }

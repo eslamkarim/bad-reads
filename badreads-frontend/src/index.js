@@ -13,6 +13,9 @@ import AuthorId from './components/authorId'
 // import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
+
+import UsersId from './components/authorsId'
+
 import Home from './components/home'
 import AdminAuthorList from './components/AdminAuthorList';
 import AdminAuthorCreate from './components/AdminAuthorCreate';
@@ -52,7 +55,7 @@ class App extends Component {
                     {/*Routes need to be include in App.js otherwise root can't find the paths*/}
                     <Route exact path='/dashboard' component={Dashboard}/>
                     <Route exact path='/author' component={Users}/>
-                    <Route exact path='/author/:id' component={AuthorId}/>
+                    <Route exact path='/author/:id' component={UsersId}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/admin/login' render={(props) => <AdminLogin {...props} checkUser={this.checkUser.bind(this)} />}/>
