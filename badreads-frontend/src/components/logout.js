@@ -11,6 +11,7 @@ class Logout extends Component{
         return(
             <div>
                 Now loggedOut; 
+                {this.props.history.push('/')}
             </div>
         )
     }

@@ -6,14 +6,14 @@ import Login from './components/login';
 import AdminLogin from './components/adminLogin';
 import Register from './components/Register';
 import Logout from './components/logout';
-import Dashboard from './components/dashboard'
+import Profile from './components/Profile'
 import Author from './components/author'
 import AuthorId from './components/authorId'
 // import Book_Page from './components/Book_Page'
 // import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
-
+import { getUser } from './utils/common';
 import UsersId from './components/authorsId'
 
 import Home from './components/home'
@@ -53,7 +53,7 @@ class App extends Component {
             <NavBar loggedIn={this.state.loggedIn} checkUser={this.checkUser} />
             <Switch>
                     {/*Routes need to be include in App.js otherwise root can't find the paths*/}
-                    <Route exact path='/dashboard' component={Dashboard}/>
+                    { getUser() && <Route exact path='/' component={Profile}/>}
                     <Route exact path='/author' component={Users}/>
                     <Route exact path='/author/:id' component={UsersId}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}

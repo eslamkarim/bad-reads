@@ -38,6 +38,12 @@ class NavBar extends Component {
                         Authors
                         </a>
                     </li>
+                    <li>
+                        <a href="/home">
+                        {/* <img src="/images/house.svg" alt="" id="small-logo1"/> */}
+                        Home
+                        </a>
+                    </li>
                     <li><img src={user.img} alt="Avatar" className="avatar"/>
                          {user.firstName} {user.lastName}
                         <ul className="drop">
