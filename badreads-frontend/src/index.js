@@ -14,6 +14,10 @@ import AuthorId from './components/authorId'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
 import Home from './components/home'
+import AdminAuthorList from './components/AdminAuthorList';
+import AdminAuthorCreate from './components/AdminAuthorCreate';
+import AdminAuthor from './components/AdminAuthor';
+
 
 class App extends Component {
   constructor(props){
@@ -55,7 +59,8 @@ class App extends Component {
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
-
+                     <Route exact path='/admin/author' component={AdminAuthorList}/>
+                     <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
                     {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                      */}

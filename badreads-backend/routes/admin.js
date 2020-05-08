@@ -15,30 +15,32 @@ router.get('/author',async(req,res)=>{
     }
         catch (err)
         {
-         next(err)
+         res.send(err);
         }
  })
     
 
-
-router.post('/author',async(req,res)=>{
-   const {authorName,date_of_birth,img} = req.body;
-   const authorInstance = new authModel({
-    authorName,
-    date_of_birth,
-    img,
-
-
-
-   })
-
+ 
+ router.post('/author',async(req,res)=>{
+     
+     const {authorName,date_of_birth,img} = req.body;
+     console.log(authorName);
+    const authorInstance = new authModel({
+        authorName,
+        date_of_birth,
+        img,
+        
+        
+        
+    })
+    
   try{
  const author=  await authorInstance.save()
         return res.json(author)
 }
 catch(err)
 {
-    next(err)
+    res.send(err);
 }
 
    })
@@ -50,7 +52,7 @@ router.patch('/author/:id',async(req,res)=>{
 }
     catch(err)
     {
-      next(err)
+        res.send(err);
 
     }
 
@@ -62,7 +64,7 @@ router.delete('/author/:id',async(req,res)=>{
         const author = await authModel.findByIdAndDelete(req.params.id)
         return res.json(author)
     } catch (error) {
-        next(err)
+        res.send(err);
     } 
     
 
@@ -80,7 +82,7 @@ router.get('/book',async(req,res)=>{
      }
          catch (err)
          {
-          next(err)
+            res.send(err);
          }
   })
      
@@ -104,7 +106,7 @@ router.get('/book',async(req,res)=>{
  }
  catch(err)
  {
-     next(err)
+    res.send(err);
  }
  
     })
@@ -116,7 +118,7 @@ router.get('/book',async(req,res)=>{
  }
      catch(err)
      {
-       next(err)
+        res.send(err);
  
      }
  
@@ -128,7 +130,7 @@ router.get('/book',async(req,res)=>{
          const book = await bookModel.findByIdAndDelete(req.params.id)
          return res.json(book)
      } catch (error) {
-         next(err)
+        res.send(err);
      } 
      
  
@@ -144,7 +146,7 @@ router.get('/book',async(req,res)=>{
      }
          catch (err)
          {
-          next(err)
+            res.send(err);
          }
   })
      
@@ -165,7 +167,7 @@ router.get('/book',async(req,res)=>{
  }
  catch(err)
  {
-     next(err)
+    res.send(err);
  }
  
     })
@@ -177,7 +179,7 @@ router.get('/book',async(req,res)=>{
  }
      catch(err)
      {
-       next(err)
+        res.send(err);
  
      }
  
@@ -189,7 +191,7 @@ router.get('/book',async(req,res)=>{
          const category = await categoryModel.findByIdAndDelete(req.params.id)
          return res.json(category)
      } catch (error) {
-         next(err)
+        res.send(err);
      } 
      
  
