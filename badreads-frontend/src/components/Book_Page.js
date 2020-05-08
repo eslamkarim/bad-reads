@@ -14,9 +14,6 @@ export default class Book_Page extends Component {
   }
 
   get_book_data = ()=>{
-    console.log("===============");
-    console.log(getUser());
-    console.log("===============");
     axios.get(`http://127.0.0.1:4000/book/${this.props.match.params.id}`).then(
       res => {
         const data = res.data;        
@@ -25,21 +22,53 @@ export default class Book_Page extends Component {
         const { categoryName } = category
         this.setState({  bookName, img, bookDescription, rating, authorName,  categoryName})
       }
+    ).catch(err=>{
+      console.log(err);
+
+    })
+
+    axios.get(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
+    .then(res=>{
+      const {rating} = res.data
+      this.setState({
+        MyRating: rating
+      })
+    }).catch(err=>{
+      console.log(err);
+
+    })
+  }
+
+  rate_book = () => {
+    axios.post(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`,{
+      rating: this.state.TempRating
+    }).then(res => {
+      console.log(res);
+      console.log(res.data);
+    }
     )
+  }
+
+  clear_rating_book = () => {
+    axios.delete(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
+    .then(res=>{
+      console.log(res);
+      
+    })
   }
 
   state = {
     TempRating : -1,
-    img: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1454296875l/25666050.jpg",
-    bookName: "Algorithms to Live By: The Computer Science of Human Decisions",
-    bookDescription: "A fascinating exploration of how insights from computer algorithms can be applied to our everyday lives, helping to solve common decision-making problems and illuminate the workings of the human mind",
-    authorName: "Brian Christian",
+    img: "",
+    bookName: "",
+    bookDescription: "",
+    authorName: "",
     Author_Link: "https://www.goodreads.com/author/show/4199891.Brian_Christian",
-    categoryName: "Programming",
+    categoryName: "",
     Category_Link: "Programming",
-    Rating: 3,
-    State: "Read",
-    MyRating: 3,
+    Rating: 0,
+    state: "Read",
+    MyRating: -1,
     reviewsList: [
       {
         reviewrName: "Mina",
@@ -74,12 +103,25 @@ export default class Book_Page extends Component {
     this.setState({
       MyRating : rate
     })    
+    this.rate_book()
   }
 
   clearRating = () => {
+    this.clear_rating_book()
     this.setState({
       MyRating : -1
     })    
+  }
+
+  changeState = async(event) => {
+    await this.setState({state: event.target.value});
+    axios.post(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: this.state.state})
+    .then(res=>{
+      console.log(res);
+    }).catch(err=>{
+      console.log(err);
+      
+    })
   }
   render() {
     const { bookName , img, authorName, Author_Link, Rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
@@ -89,10 +131,10 @@ export default class Book_Page extends Component {
         <div class="row">
           <div class="col-2">
             <img id="bookImg" src={img} />
-            <select class="custom-select">
-              <option value="1" selected={ State == "Want to Read" ? true : false } >Want to Read</option>
-              <option value="2" selected={ State == "Read" ? true : false }>Read</option>
-              <option value="3" selected={ State == "Current Read" ? true : false }>Current Reading</option>
+            <select class="custom-select" onChange={this.changeState} value={this.state.state}>
+              <option value="Want to Read" >Want to Read</option>
+              <option value="Read" >Read</option>
+              <option value="Current Reading">Current Reading</option>
             </select>
             <div class="container">
               { MyRating != -1 ? <div>
