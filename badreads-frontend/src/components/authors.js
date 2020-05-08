@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './data-table';
+import DataTableError from './data-table-error';
+
 import './author.css'
 
 export default class Users extends Component {
@@ -14,8 +16,6 @@ export default class Users extends Component {
         axios.get('http://localhost:4000/author')
             .then(res => {
                 this.setState({ usersCollection: res.data });
-                console.log(res.data);
-
             })
             .catch(function (error) {
                 console.log(error);
@@ -23,9 +23,15 @@ export default class Users extends Component {
     }
 
     dataTable() {
-        return this.state.usersCollection.map((data, i) => {
-            return <DataTable obj={data} key={i} />;
-        });
+        if (this.state.usersCollection.length == 0){
+            return <DataTableError />
+        }
+        else{
+            return this.state.usersCollection.map((data, i) => {            
+                return <DataTable obj={data} key={i} />;
+            });
+            
+        }
     }
 
     render() {

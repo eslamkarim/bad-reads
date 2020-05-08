@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './data-table-category';
 import './author.css'
+import DataTableError from './data-table-error-category'
+
 
 export default class Category extends Component {
 
@@ -23,9 +25,14 @@ export default class Category extends Component {
     }
 
     dataTable() {
-        return this.state.usersCollection.map((data, i) => {
-            return <DataTable obj={data} key={i} />;
-        });
+        if (this.state.usersCollection.length == 0) {
+            return <DataTableError />
+        }
+        else {
+            return this.state.usersCollection.map((data, i) => {
+                return <DataTable obj={data} key={i} />;
+            });
+        }
     }
 
     render() {

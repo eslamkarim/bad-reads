@@ -6,6 +6,9 @@ import HomeCategoryTable from './homeCategoryTable';
 import HomeAuthorTable from './HomeAuthorTable';
 import HomeBookTable from './HomeBookTable';
 import './author.css'
+import DataTableErrorCategory from './data-table-error-category'
+import DataTableErrorBook from './data-table-error-book'
+import DataTableError from './data-table-error';
 
 
 
@@ -63,37 +66,52 @@ export default class Home extends Component {
     }
 
     homeCategoryTable() {
-        return this.state.categoryCollection.map((data, i) => {
-            return <HomeCategoryTable obj = {data} key = {i} />;
-        });
+        if (this.state.categoryCollection.length == 0) {
+            return <DataTableErrorCategory />
+        }
+        else {
+            return this.state.categoryCollection.map((data, i) => {
+                return <HomeCategoryTable obj={data} key={i} />;
+            });
+        }
     }
 
     homeAuthorTable() {
-        return this.state.authorCollection.map((data, i) => {
-            return <HomeAuthorTable obj = {data} key = {i} />;
-        });
+        if (this.state.authorCollection.length == 0) {
+            return <DataTableError />
+        }
+        else {
+            return this.state.authorCollection.map((data, i) => {
+                return <HomeAuthorTable obj={data} key={i} />;
+            });
+        }
     }
 
     homeBookTable() {
-        return this.state.bookCollection.map((data, i) => {
-            return <HomeBookTable obj = {data} key = {i} />;
-        });
+        if (this.state.bookCollection.length == 0) {
+            return <DataTableErrorBook />
+        }
+        else {
+            return this.state.bookCollection.map((data, i) => {
+                return <HomeBookTable obj={data} key={i} />;
+            });
+        }
     }
 
     render() {
-        return ( 
+        return (
             <center>
                 <h1 className="grad">Pobular Books</h1>
                 <div className="i-am-centered" >
                     <div className="row boy" >
-                    
+
                         {
                             this.homeBookTable()
                         }
 
                     </div>
                 </div>
-        
+
                 <h1 className="grad">Pobular Categories</h1>
                 <div className="i-am-centered" >
 
@@ -101,12 +119,12 @@ export default class Home extends Component {
                         {
                             this.homeCategoryTable()
                         }
-                    
+
 
                     </div>
                 </div>
-                
-                
+
+
                 <h1 className="grad">Pobular Authors</h1>
                 <div className="i-am-centered" >
 
