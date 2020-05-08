@@ -15,7 +15,7 @@ export default class Users extends Component {
             .then(res => {
                 this.setState({ usersCollection: res.data });
                 console.log(res.data);
-                
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -30,14 +30,18 @@ export default class Users extends Component {
 
     render() {
         return (
-            <div className="i-am-centered" >
 
-                <div className="row boy" >
+            <center>
+                <h1 className="grad" id="boys"> ❤️ <span className="grad">Our Authors </span> <span id="boys"> ❤️ </span>  </h1>
+                <div className="i-am-centered" >
 
-                    {this.dataTable()}
+                    <div className="row boy" >
 
+                        {this.dataTable()}
+
+                    </div>
                 </div>
-            </div>
+            </center>
         )
     }
 }

@@ -9,40 +9,7 @@ import axios from 'axios';
 class DataTable extends Component {
 
 
-    myFunction = () => {
-        let id = this.props.obj._id
-        console.log(id);
-
-        axios.get(`http://localhost:4000/author/${id}`)
-            .then(res => {
-                // window.location.replace(`http://localhost:3000/author/${this.props.obj._id}`);
-                return (
-
-
-                    <BrowserRouter>
-                        <Switch>
-                            <Redirect to="/404" />
-                        </Switch>
-                    </BrowserRouter>
-
-                    // <Route exact path='/author/:id' component={UsersId} props={res.data}/>
-
-                )
-
-                console.log(res.data);
-                console.log("booooooooooooooooooooooooooooooooooooooooy");
-
-
-            })
-            .catch(function (error) {
-                console.log(error);
-                console.log("3egaaaaaaaaaaaaaaaaaaaaaa");
-
-            })
-
-
-
-    }
+    
     render() {
         let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
         return (

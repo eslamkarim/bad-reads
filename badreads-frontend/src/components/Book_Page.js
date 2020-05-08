@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Book_page.css'
 import {
   Link,
+  Redirect,
 } from 'react-router-dom'
 import axios from 'axios';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -13,47 +14,82 @@ export default class Book_Page extends Component {
     this.get_book_data()
   }
 
+
   get_book_data = ()=>{
+    
+    // get book data
     axios.get(`http://127.0.0.1:4000/book/${this.props.match.params.id}`).then(
       res => {
         const data = res.data;        
+        console.log("data",data);
         const { bookName, img, bookDescription, rating, author,  category} = data
-        const { authorName } = author
-        const { categoryName } = category
-        this.setState({  bookName, img, bookDescription, rating, authorName,  categoryName})
+        const {  authorName } = author
+        const Author_Link = `/author/${author._id}`
+        const {  categoryName } = category
+        const Category_Link = `/book/${category._id}`
+        this.setState({  bookName, img, bookDescription, rating, authorName,  categoryName, Category_Link, Author_Link})
       }
     ).catch(err=>{
       console.log(err);
 
     })
 
-    axios.get(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
-    .then(res=>{
-      const {rating} = res.data
-      this.setState({
-        MyRating: rating
+    if (getUser()){
+      // get user rating for this book
+      axios.get(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
+      .then(res=>{
+        const {rating} = res.data
+        this.setState({
+          MyRating: rating
+        })
+      }).catch(err=>{
+        console.log(err);
       })
+  
+      // get user state for this book
+      axios.get(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`)
+      .then(res=>{
+        this.setState({state: res.data.action})
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
+
+    // get revies for this book
+    axios.get(`http://127.0.0.1:4000/review/${this.props.match.params.id}`)
+    .then(res=>{
+      this.setState({reviewsList: res.data})
+      console.log(this.state.reviewsList);
+
     }).catch(err=>{
       console.log(err);
-
     })
+      
   }
 
   rate_book = () => {
-    axios.post(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`,{
-      rating: this.state.TempRating
-    }).then(res => {
-      console.log(res);
-      console.log(res.data);
+    if (getUser()){
+      axios.post(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`,{
+        rating: this.state.TempRating
+      }).then(res => {
+        console.log(res);
+        console.log(res.data);
+        this.get_book_data()
+      }
+      )
+    }else{
+      this.props.history.push(`/login`)
     }
-    )
   }
 
   clear_rating_book = () => {
     axios.delete(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
     .then(res=>{
       console.log(res);
-      
+      this.get_book_data()
+      this.setState({
+        MyRating : -1
+      })   
     })
   }
 
@@ -65,27 +101,12 @@ export default class Book_Page extends Component {
     authorName: "",
     Author_Link: "https://www.goodreads.com/author/show/4199891.Brian_Christian",
     categoryName: "",
-    Category_Link: "Programming",
-    Rating: 0,
+    Category_Link: "",
+    rating: 0,
     state: "Read",
     MyRating: -1,
-    reviewsList: [
-      {
-        reviewrName: "Mina",
-        reviewrImg: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1454296875l/25666050.jpg",
-        reviewerComment: "A simple algorithm to conceive of literary plots could be to slot them as belonging to one of these categories: Man vs. Nature, Man vs. Self, Man vs. Man & Man vs. Society.",
-      },
-      {
-        reviewrName: "Mina",
-        reviewrImg: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1454296875l/25666050.jpg",
-        reviewerComment: "A simple algorithm to conceive of literary plots could be to slot them as belonging to one of these categories: Man vs. Nature, Man vs. Self, Man vs. Man & Man vs. Society.",
-      },
-      {
-        reviewrName: "Mina",
-        reviewrImg: "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1454296875l/25666050.jpg",
-        reviewerComment: "A simple algorithm to conceive of literary plots could be to slot them as belonging to one of these categories: Man vs. Nature, Man vs. Self, Man vs. Man & Man vs. Society.",
-      },
-    ]
+    reviewsList: [],
+    review: ""
   }
 
   mouseEnterRate = rate => e => {
@@ -99,44 +120,62 @@ export default class Book_Page extends Component {
     }) 
   }
 
-  makeRating = rate => e => {
-    this.setState({
-      MyRating : rate
-    })    
+  makeRating = rate => (e) => {  
     this.rate_book()
   }
 
   clearRating = () => {
     this.clear_rating_book()
-    this.setState({
-      MyRating : -1
-    })    
+     
   }
 
   changeState = async(event) => {
-    await this.setState({state: event.target.value});
-    axios.post(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: this.state.state})
-    .then(res=>{
-      console.log(res);
-    }).catch(err=>{
-      console.log(err);
-      
-    })
+    if (getUser()){
+      this.setState({state: event.target.value})
+      axios.post(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: this.state.state})
+      .then(res=>{
+        console.log(res);
+      }).catch(err=>{
+        console.log(err);
+        
+      })
+    }else{
+      this.props.history.push(`/login`)
+    }
   }
+
+  submitReview = () => {
+    if (getUser()){
+      axios.post(`http://127.0.0.1:4000/review/${getUser().userId}/${this.props.match.params.id}`,{review: this.state.review})
+      .then(res=>{
+        console.log(res);
+        this.setState({review: ""});
+        this.get_book_data()
+      }).catch(err=>{
+        console.log(err);
+      })
+    }else{
+      this.props.history.push(`/login`)
+    }
+    
+  }
+
+  
   render() {
-    const { bookName , img, authorName, Author_Link, Rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
+    const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
     console.log(this.props.match.params.id);
+    const myID = getUser().userId
     return (
-      <div class="container" id="book">
-        <div class="row">
-          <div class="col-2">
+      <div className="container" id="book">
+        <div className="row">
+          <div className="col-2">
             <img id="bookImg" src={img} />
-            <select class="custom-select" onChange={this.changeState} value={this.state.state}>
+            <select className="custom-select" onChange={this.changeState} value={this.state.state}>
               <option value="Want to Read" >Want to Read</option>
               <option value="Read" >Read</option>
               <option value="Current Reading">Current Reading</option>
             </select>
-            <div class="container">
+            <div className="container">
               { MyRating != -1 ? <div>
                 <Link onClick={this.clearRating}>Clear rating</Link>
               </div> : null }
@@ -149,20 +188,20 @@ export default class Book_Page extends Component {
               </span> 
             </div>
           </div>
-          <div class="col-9">
-            <h1 id="bookTitle" class="gr-h1 gr-h1--serif" itemprop="name">
+          <div className="col-9">
+            <h1 id="bookTitle" className="gr-h1 gr-h1--serif" itemProp="name">
                   {bookName}
             </h1>
-            <div id="bookAuthors" class="">
-              <span class="by">by</span>
+            <div id="bookAuthors" className="">
+              <span className="by">by</span>
               <span>
-                <div class="authorName__container">
+                <div className="authorName__container">
                   <Link to={Author_Link}><span>{authorName}</span></Link> 
                 </div>
               </span>
             </div>
 
-            <div id="bookCategory" class="">
+            <div id="bookCategory" className="">
               <span>
                 <div >
                   <Link to={Category_Link}><span>{categoryName}</span></Link> 
@@ -171,11 +210,11 @@ export default class Book_Page extends Component {
             </div>
             
             <span >
-              <span ><FontAwesomeIcon icon={faStar} color={Rating >= 1 ? "#FF9529": ""}/></span>
-              <span ><FontAwesomeIcon icon={faStar} color={Rating >= 2 ? "#FF9529": ""}/></span>
-              <span ><FontAwesomeIcon icon={faStar} color={Rating >= 3 ? "#FF9529": ""}/></span>
-              <span ><FontAwesomeIcon icon={faStar} color={Rating >= 4 ? "#FF9529": ""}/></span>
-              <span ><FontAwesomeIcon icon={faStar} color={Rating >= 5 ? "#FF9529": ""}/></span>
+              <span ><FontAwesomeIcon icon={faStar} color={rating >= 1 ? "#FF9529": ""}/></span>
+              <span ><FontAwesomeIcon icon={faStar} color={rating >= 2 ? "#FF9529": ""}/></span>
+              <span ><FontAwesomeIcon icon={faStar} color={rating >= 3 ? "#FF9529": ""}/></span>
+              <span ><FontAwesomeIcon icon={faStar} color={rating >= 4 ? "#FF9529": ""}/></span>
+              <span ><FontAwesomeIcon icon={faStar} color={rating >= 5 ? "#FF9529": ""}/></span>
             </span>
 
             <p>
@@ -185,26 +224,28 @@ export default class Book_Page extends Component {
           </div>
         </div>
         
-        <div class="mb-3">
-          <label for="validationTextarea">Enter Your Review</label>
-          <textarea class="form-control " id="validationTextarea" placeholder="Write your review" rows="4" required></textarea>
-          <button type="button" class="btn btn-primary" >Submit</button>
+        <div className="mb-3">
+          <label htmlFor="validationTextarea">Enter Your Review</label>
+          <textarea className="form-control " id="validationTextarea" placeholder="Write your review" rows="4" value={this.state.review} required onChange={(e)=>this.setState({review: e.target.value})}></textarea>
+          <button type="button" className="btn btn-primary" onClick={this.submitReview} >Submit</button>
         </div>
 
-        <div class=" border-info rounded" >
+        <div className=" border-info rounded" >
           {
             reviewsList.map((reviewer)=>
-              <div class="media border"  style={{padding: "5px 10px",backgroundColor:"white",borderRadius: "15px"}}>
-                <div style={{textAlign: "center"}} class="mr-3" >
-                  <img src={reviewer.reviewrImg}  alt="..." width="100px" height="100px" style={{borderRadius:"50%"}} />
-                  <h4>{reviewer.reviewrName}</h4>
+              <div className="media border"  style={{padding: "5px 10px",backgroundColor:"white",borderRadius: "15px"}}>
+                <div style={{textAlign: "center"}} className="mr-3" >
+                  <img src={reviewer.user.img}  alt="..." width="100px" height="100px" style={{borderRadius:"50%"}} />
+                  <h4>{reviewer.user.firstName}</h4>
                 </div>
-              <div class="media-body" style={{alignSelf: "center"}}>
-                <p>{reviewer.reviewerComment}</p>
+              <div className="media-body" style={{alignSelf: "center"}}>
+                <p>{reviewer.review}</p>
               </div>
+              <p>{myID}</p>
+              <p>{reviewer.user._id}</p>
+              {  myID == reviewer.user._id ? <button type="button" class="btn btn-danger">{reviewer.user._id}</button> :null}
             </div>
             )
-
           }
         </div>
       </div>
