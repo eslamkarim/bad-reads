@@ -12,7 +12,6 @@ export default class UsersId extends Component {
 
     componentDidMount() {
         let id = this.props.match.params.id
-
         axios.get(`http://localhost:4000/author/${id}`)
             .then(res => {
                 this.setState({ usersCollection: res.data });
@@ -25,13 +24,6 @@ export default class UsersId extends Component {
         axios.get(`http://localhost:4000/author/book/${id}`)
             .then(res => {
                 this.setState({ books: res.data });
-                console.log("booooooooooooooooooooooooooooooooooy");
-
-                console.log(res.data);
-                console.log("booooooooooooooooooooooooooooooooooy2");
-
-
-
             })
             .catch(function (error) {
                 console.log(error);
@@ -52,21 +44,7 @@ export default class UsersId extends Component {
 
             <center className="center-1">
                 <h1 className="grad" id="boys"> ❤️ <span className="grad">Author Information </span> <span id="boys"> ❤️ </span>  </h1>
-                {/* <div className="i-am-centered" >
-                    <div className="row boy" >
-                        <div className="col-md-3 col-sm-6 item">
-                            <div className="card item-card card-block">
 
-                                <img className="img" src={this.state.usersCollection.img} />
-                                <h1 className="item-card-title mt-3 mb-3"> {this.state.usersCollection.authorName}</h1>
-                                <h1 className="item-card-title mt-3 mb-3"> {this.state.usersCollection.date_of_birth}</h1>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div> */}
                 <div class="container">
                     <div class="avatar-flip">
                         <img className="img" src={this.state.usersCollection.img} />
