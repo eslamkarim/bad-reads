@@ -1,0 +1,11 @@
+#bookImg{
+  max-width: 150px;
+}
+
+#book{
+  margin-top: 25px;
+}
+
+#book *{
+  margin-top: 8px;
+}

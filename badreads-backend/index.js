@@ -11,6 +11,9 @@ const authorRouter = require("./routes/authorRoute");
 const adminRouter = require('./routes/admin')
 const bookRouter = require("./routes/bookRoute");
 const categoryRouter = require("./routes/categoryRoute");
+const rate = require("./routes/rate");
+const userBook = require("./routes/userBook");
+const review = require("./routes/reviewBook");
 const homeRouter = require("./routes/homeRoute");
 
 
@@ -57,6 +60,9 @@ app.use('/author',authorRouter);
 app.use('/admin',adminRouter);
 app.use('/book',bookRouter);
 app.use('/category',categoryRouter);
+app.use('/rate',rate);
+app.use('/userBook',userBook);
+app.use('/review',review);
 app.use('/',homeRouter);
 
 

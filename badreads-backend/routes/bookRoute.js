@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bookModel = require('../models/book.js')
+const rate_bookModel = require('../models/rate_book')
 
 router.get('/', async (req , res )=>{
     try {
@@ -16,7 +17,22 @@ router.get('/', async (req , res )=>{
 router.get('/:id',async(req , res)=>{
     id = req.params.id
     try {
-        const books = await bookModel.findById(id)
+        let books = await bookModel.findById(id).populate('author','authorName').populate('category','categoryName')
+        const test = await rate_bookModel.aggregate([
+                                {
+                                    $group:
+                                    {
+                                        _id: `${req.params.id}`,
+                                        avg: { $avg: "$rating" }
+                                    }
+                                }
+                            ])
+        
+        try{
+            books.rating = test[0].avg
+        }catch(err){
+            books.rating=0
+        }               
         res.json(books)
         
     } catch (error) {
@@ -28,7 +44,7 @@ router.get('/:id',async(req , res)=>{
 router.post('/',async(req , res)=>{
     try {        
         const books = await bookModel.create(req.body)
-            return res.json(books)
+        return res.json(books)
         
     } catch (error) {
         

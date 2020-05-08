@@ -2,6 +2,7 @@ import React, {Fragment, Component} from 'react';
 import './nav.css';
 import Navbar from 'react-bootstrap/Navbar';
 import { getUser } from '../utils/common';
+import { Link } from 'react-router-dom';
 
  
 
@@ -33,13 +34,22 @@ class NavBar extends Component {
             this.MavList = (
                 <Fragment>
                     <li>
-                        <a href="/author">
+                        <Link to="/home">
+                        {/* <img src="/images/house.svg" alt="" id="small-logo1"/> */}
+                        Home
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/author">
                         <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
                         Authors
-                        </a>
+                        </Link>
                     </li>
-                    <li><img src={user.img} alt="Avatar" className="avatar"/>
+                    <li>
+                        <Link to="/">
+                        <img src={user.img} alt="Avatar" className="avatar"/>
                          {user.firstName} {user.lastName}
+                        </Link>
                         <ul className="drop">
                             <div className="menu-arrow"></div>
                             <li><a href="/logout">Sign Out</a></li>
@@ -54,9 +64,9 @@ class NavBar extends Component {
         }else{
             this.MavList =(
                 <Fragment>
-                    <li><a href="/login">Login</a></li>  
-                    <li><a href="/admin/login">Admin panel</a></li>    
-                    <li><a href="/register">Register</a></li>   
+                    <li><Link to="/login">Login</Link></li>  
+                    <li><Link to="/admin/login">Admin panel</Link></li>    
+                    <li><Link to="/register">Register</Link></li>   
                 </Fragment>
             );
         }
@@ -66,10 +76,10 @@ class NavBar extends Component {
         return(
              <Navbar>
                 <div className="logo">
-                    <a href="/">
+                    <Link to="/">
                     <img src="/images/logo.png" alt="" id="small-logo"/>
                     <img src="images/badreads.png" alt="" id="large-logo"/>
-                    </a>
+                    </Link>
                     <h4>A Community<br/>For Book Haters</h4>
                     
                 </div>

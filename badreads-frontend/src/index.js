@@ -6,17 +6,21 @@ import Login from './components/login';
 import AdminLogin from './components/adminLogin';
 import Register from './components/Register';
 import Logout from './components/logout';
-import Dashboard from './components/dashboard'
+import Profile from './components/Profile'
 import Author from './components/author'
 import AuthorId from './components/authorId'
-// import Book_Page from './components/Book_Page'
-// import Book from './components/Book'
+import Book_Page from './components/Book_Page'
+import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
-
+import { getUser } from './utils/common';
 import UsersId from './components/authorsId'
 
 import Home from './components/home'
+import AdminAuthorList from './components/AdminAuthorList';
+import AdminAuthorCreate from './components/AdminAuthorCreate';
+import AdminAuthor from './components/AdminAuthor';
+
 
 class App extends Component {
   constructor(props){
@@ -49,7 +53,7 @@ class App extends Component {
             <NavBar loggedIn={this.state.loggedIn} checkUser={this.checkUser} />
             <Switch>
                     {/*Routes need to be include in App.js otherwise root can't find the paths*/}
-                    <Route exact path='/dashboard' component={Dashboard}/>
+                    { getUser() && <Route exact path='/' component={Profile}/>}
                     <Route exact path='/author' component={Users}/>
                     <Route exact path='/author/:id' component={UsersId}/>
                     {/* <Route exact path='/categories' component={Categories}/> */}
@@ -58,10 +62,13 @@ class App extends Component {
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
+                    { getUser() && <Route exact path='/home' component={Home}/>}
 
-                    {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
+                     <Route exact path='/admin/author' component={AdminAuthorList}/>
+                     <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
+                    <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
-                     */}
+                    
 
 
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />
