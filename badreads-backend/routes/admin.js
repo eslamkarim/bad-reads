@@ -5,7 +5,29 @@ const categoryModel= require('../models/category')
 const router = express.Router()
 const utils = require('../helpers/util.js');
 const userModel = require('../models/user.js')
+var multer = require('multer')
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+    cb(null, 'public/authors/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({ storage: storage ,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg"|| file.mimetype == "image/gif") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return resp.status(401).json({
+                error: true,
+                message: "image must be .png .jpg or .jpeg!"
+            });
+        }
+    }
+});
 router.get('/author',async(req,res)=>{
 
    try{
@@ -21,17 +43,14 @@ router.get('/author',async(req,res)=>{
     
 
  
- router.post('/author',async(req,res)=>{
-     
-     const {authorName,date_of_birth,img} = req.body;
+ router.post('/author',upload.single('img'),async(req,res)=>{
+     const url = req.protocol + '://' + req.get('host') + 'authors' + req.file.originalname 
+     const {authorName,date_of_birth} = req.body;
      console.log(authorName);
     const authorInstance = new authModel({
-        authorName,
-        date_of_birth,
-        img,
-        
-        
-        
+        authorName:authorName,
+        date_of_birth:date_of_birth,
+        img: url,        
     })
     
   try{

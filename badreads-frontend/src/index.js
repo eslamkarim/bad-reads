@@ -9,8 +9,8 @@ import Logout from './components/logout';
 import Profile from './components/Profile'
 import Author from './components/author'
 import AuthorId from './components/authorId'
-// import Book_Page from './components/Book_Page'
-// import Book from './components/Book'
+import Book_Page from './components/Book_Page'
+import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
 import { getUser } from './utils/common';
@@ -62,11 +62,13 @@ class App extends Component {
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
+
+                    <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
                     {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
-                    <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
-                     */}
+                    <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} /> */}
+                    
 
 
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />

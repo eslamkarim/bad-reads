@@ -16,6 +16,7 @@ bookSchema.statics.getLastID = () => {
   this.find({}).sort({bookId:-1}).limit(1).bookId
 }
 
+
 const bookModel = mongoose.model('Book',bookSchema)
 
 // bookSchema.pre(save, async function(next){
