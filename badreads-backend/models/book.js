@@ -6,8 +6,8 @@ const bookSchema = new mongoose.Schema({
   img: {type: String, required: [true,"Book image is required"]},
   bookDescription: {type: String, required: [true,"Book description is required"]},
   rating: {type: Number, default:-1},
-  // author: {type: mongoose.Schema.Types.ObjectId, ref : 'Author'},
-  // category: {type: mongoose.Schema.Types.ObjectId, ref : 'Category'}
+  author: {type: mongoose.Schema.Types.ObjectId, ref : 'Author'},
+  category: {type: mongoose.Schema.Types.ObjectId, ref : 'Category'}
 
 })
 
