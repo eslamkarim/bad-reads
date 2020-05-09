@@ -10,8 +10,8 @@ class AdminAuthorUpdate extends Component
         super(props);
         console.log(this.props.details);
         this.state={
-        authorName:'',
-        date_of_birth:'',
+        authorName:this.props.location.state.details.authorName,
+        date_of_birth:this.props.location.state.details.date_of_birth,
         img:null
         }
      }
@@ -40,7 +40,7 @@ class AdminAuthorUpdate extends Component
         var aformData = new FormData();
         aformData.append("authorName",this.state.authorName)
         aformData.append("date_of_birth",this.state.date_of_birth)
-        aformData.append("img",this.state.img)
+        if(this.state.img) aformData.append("img",this.state.img)
         this.props.history.push('/admin/author/')
         axios.patch('http://localhost:4000/admin/author/'+this.props.location.state.details._id, aformData,{
           headers: {
@@ -70,9 +70,9 @@ class AdminAuthorUpdate extends Component
                <Form>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Author Name</Form.Label>
-          <Form.Control type="text" name="authorName" value={this.props.location.state.details.authorName} onChange={this.handleauthorNameChange}/>
+          <Form.Control type="text" name="authorName" value={this.state.authorName} onChange={this.handleauthorNameChange}/>
           <Form.Label>Author Birthday</Form.Label>
-          <Form.Control type="text" name="date_of_birth" value={this.props.location.state.details.date_of_birth} onChange={this.handledate_of_birthChange}/>
+          <Form.Control type="text" name="date_of_birth" value={this.state.date_of_birth} onChange={this.handledate_of_birthChange}/>
           <Form.Label>Author Photo</Form.Label>
           <div className="form-group">
             <input type="file" name="img" onChange={this.handleImageChange}/>
