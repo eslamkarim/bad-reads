@@ -4,10 +4,16 @@ import './author.css'
 
 class HomeAuthorTable extends Component {
 
+    constructor(props) {
+        super(props);
+        
+    }
     render() {
         let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
+        console.log(this.props);
+        
         return (
-            <div className="col-md-3 col-sm-6 item">
+            <div key={this.props.id}>
                 <div className="card item-card card-block">
                     <a href={bUrl}>
                             <img className="img" src={this.props.obj.img} />

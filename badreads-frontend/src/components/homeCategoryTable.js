@@ -6,8 +6,10 @@ class HomeCategoryTable extends Component {
 
     render() {
         let bUrl = `http://localhost:3000/category/${this.props.obj._id}`
+        console.log(this.props);
+        
         return (
-            <div className="col-md-3 col-sm-6 item">
+            <div key={this.props.id}>
                 <div className="card item-card-cat card-block">
                     <Link to={bUrl}>
                         <br />

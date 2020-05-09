@@ -3,13 +3,15 @@ import React, {
   Component
 } from 'react';
 import axios from 'axios';
-import HomeCategoryTable from './homeCategoryTable';
-import HomeAuthorTable from './HomeAuthorTable';
 import HomeBookTable from './HomeBookTable';
 import './Profile.css'
 import './author.css'
+import DataTableErrorBook from './data-table-error-book'
+
 const user = getUser();
 console.log(user);
+let userId = user.userId
+
 
 
 export default class Home extends Component {
@@ -18,75 +20,83 @@ export default class Home extends Component {
       super(props);
       this.state = {
           usersBooks: [],
-          bookCollection: [],
-          authorCollection: []
 
       };
   }
 
   componentDidMount() {
-      let userId = user.userId
       axios.get(`http://localhost:4000/userbook/${userId}`)
           .then(res => {
-            var userBooks = res.data.map((val)=>{
+            const userBooks = res.data.map((val)=>{
                 return val.bookId
             })
-            console.log(res.data);
-            
+
             this.setState({
-                usersBooks: userBooks
+                usersBooks: userBooks,
             });
+            
               
           })
           .catch(function (error) {
               console.log(error);
           })
 
-      axios.get('http://localhost:4000/home/author')
-          .then(res => {
-              console.log(res.data.sort(() => Math.random() - 0.5))
-
-              this.setState({
-                  authorCollection: res.data.slice(0, 5)
-              });
-              console.log(typeof (this.state.authorCollection));
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
-
-      axios.get('http://localhost:4000/home/book')
-          .then(res => {
-
-              this.setState({
-                  bookCollection: res.data
-              });
-              console.log(this.state.bookCollection);
-          })
-          .catch(function (error) {
-              console.log(error);
-          })
   }
 
-  homeCategoryTable() {
-      return this.state.usersBooks.map((data, i) => {
-          return <HomeCategoryTable obj = {data} key = {i} />;
-      });
-  }
 
-  homeAuthorTable() {
-      return this.state.authorCollection.map((data, i) => {
-          return <HomeAuthorTable obj = {data} key = {i} />;
-      });
-  }
+    all = () => {
+        axios.get(`http://localhost:4000/userbook/${userId}`)
+            .then(res => {
+                const userBooks = res.data.map((val)=>{
+                    return val.bookId
+                })
+                
+                this.setState({
+                    usersBooks: userBooks,
+                });
+                
+                
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
 
+    }
+    readAction = (e,value) => {
+        let userId = user.userId
+        axios.get(`http://localhost:4000/userbook/${value}/${userId}`)
+            .then(res => {
+                const userBooks = res.data.map((val)=>{
+                    return val.bookId
+                })
+                
+                this.setState({
+                    usersBooks: userBooks,
+                });
+                
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+    }
+
+  
   homeBookTable() {
-      console.log(this.state.usersBooks);
-      
-      return this.state.usersBooks.map((data, i) => {
-          console.log(data._id);
-              return <HomeBookTable obj = {data} key = {i} />;
-      });
+      if (this.state.usersBooks.length == 0) {
+          return <DataTableErrorBook />
+      }
+      else{
+    return this.state.usersBooks.map((data, i) => {
+        data.key = Math.floor(Math.random() * 100000)
+            return(
+            <div className="col-md-3 col-sm-6 item" key={data.key}>
+                <HomeBookTable id={data.key} obj = {data} />
+            </div>
+        );
+    })
+    }
+
   }
 
   render() {
@@ -96,10 +106,10 @@ export default class Home extends Component {
             <div className="mySidenav sidenav">
               <div className="sidenav" >
                 <ul className="navul">
-                  <li className="navulli"><span className="navullispan">Home</span></li>
-                  <li className="navulli"><span className="navullispan">Products</span></li>
-                  <li className="navulli"><span className="navullispan">Services</span></li>
-                  <li className="navulli"><span className="navullispan">Contact</span></li>
+                  <li className="navulli" onClick={this.all}><span className="navullispan">All</span></li>
+                  <li className="navulli" onClick={(e) => {this.readAction(e,"current")}}><span className="navullispan">Currently Reading</span></li>
+                  <li className="navulli" onClick={(e) => {this.readAction(e,"wtr")}}><span className="navullispan">Want to Read</span></li>
+                  <li className="navulli" onClick={(e) => {this.readAction(e,"read")}}><span className="navullispan">Already Read</span></li>
                 </ul>
               </div>
             </div>
