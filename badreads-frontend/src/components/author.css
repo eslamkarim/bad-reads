@@ -254,3 +254,8 @@ body {
 .center-1{
   background-color: #C5C9B8;
 }
+
+.buttonsSpan {
+  margin: 3px;
+  margin-bottom: 10px;
+}
