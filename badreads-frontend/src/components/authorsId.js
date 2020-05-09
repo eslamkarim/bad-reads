@@ -48,7 +48,7 @@ export default class UsersId extends Component {
             <center className="center-1">
                 <h1 className="grad" id="boys"> ❤️ <span className="grad">Author Information </span> <span id="boys"> ❤️ </span>  </h1>
 
-                <div className="container">
+                <div className="containerr">
                     <div className="avatar-flip">
                         <img className="img" src={this.state.usersCollection.img} />
                         <img className="img" src={this.state.usersCollection.img} />
