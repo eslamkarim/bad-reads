@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authorModel = require('../models/author')
+const bookModel = require('../models/book')
 
  router.get('/', async  (req , res )=>{
     try {
@@ -13,6 +14,17 @@ const authorModel = require('../models/author')
     
 })
 
+router.get('/book/:author', async (req , res )=>{
+    author = req.params.author
+    try {
+        const books = await bookModel.find({author: author})        
+        return res.json(books)
+        
+    } catch (error) {
+        res.send(error)
+    }
+    
+})
 router.get('/:id',async(req , res)=>{
     id = req.params.id
     try {
@@ -24,6 +36,7 @@ router.get('/:id',async(req , res)=>{
     }
 
 })
+
 
 router.post('/',async(req , res)=>{
     console.log(req.body);

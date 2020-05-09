@@ -111,7 +111,7 @@ deleteAuthor=(index)=>{
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>
+  <Button onClick={this.onSubmit}>+
  </Button>
 </>
   

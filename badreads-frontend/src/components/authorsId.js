@@ -1,63 +1,76 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import DataTable from './data-table';
+import DataTable from './data-table-book';
 import './author.css'
-
+import DataTableError from './data-table-error-book'
 export default class UsersId extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { usersCollection: [] };
+        this.state = { usersCollection: [], books: [] };
     }
 
     componentDidMount() {
         let id = this.props.match.params.id
-        console.log(id);
-
         axios.get(`http://localhost:4000/author/${id}`)
             .then(res => {
                 this.setState({ usersCollection: res.data });
-
-
-
             })
             .catch(function (error) {
                 console.log(error);
 
             })
+
+        axios.get(`http://localhost:4000/author/book/${id}`)
+            .then(res => {
+                this.setState({ books: res.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     dataTable() {
-        return this.state.usersCollection.map((data, i) => {
-            return <DataTable obj={data} key={i} />;
-        });
+        if (this.state.books.length == 0) {
+            return <DataTableError />
+        }
+        else {
+            return this.state.books.map((data, i) => {
+                return <DataTable obj={data} key={i} />;
+            });
+        }
     }
 
+
     render() {
-        console.log(this);
-
         return (
-            // <div className="i-am-centered" >
 
-            //     <div className="row boy" >
+            <center className="center-1">
+                <h1 className="grad" id="boys"> ❤️ <span className="grad">Author Information </span> <span id="boys"> ❤️ </span>  </h1>
 
-            //         {/* {this.dataTable()} */}
-            //         mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-            //         {this.state.usersCollection.authorName}
+                <div className="container">
+                    <div className="avatar-flip">
+                        <img className="img" src={this.state.usersCollection.img} />
+                        <img className="img" src={this.state.usersCollection.img} />
 
-            //     </div>
-            // </div>
-            <div className="i-am-centered" >
-                <div className="row boy" >
-                    <div className="col-md-3 col-sm-6 item">
-                        <div className="card item-card card-block">
-                            <img className="img" src={this.state.usersCollection.img} />
-                            <h1 className="item-card-title mt-3 mb-3"> {this.state.usersCollection.authorName}</h1>
-                            <h1 className="item-card-title mt-3 mb-3"> {this.state.usersCollection.date_of_birth}</h1>
-                        </div>
+                    </div>
+                    <h1 className="name-item"> Name: {this.state.usersCollection.authorName}</h1>
+                    <h3 className="item-card-title mt-3 mb-3"> Birth Date: {this.state.usersCollection.date_of_birth}</h3>
+                    <h6 className="info"> {this.state.usersCollection.authorInfo}</h6>
+
+                </div>
+                <h1 className="grad" id="boys"> ❤️ <span className="grad"> Author's Books </span> <span id="boys"> ❤️ </span>  </h1>
+
+                <div className="i-am-centered" >
+
+                    <div className="row boy" >
+
+                        {this.dataTable()}
+
                     </div>
                 </div>
-            </div>
+
+            </center >
         )
     }
 }

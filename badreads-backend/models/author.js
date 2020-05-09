@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const authorSchema = new mongoose.Schema({
 
     authorName: {type: String, required: true, unique: true},
+    authorInfo: {type: String},
     date_of_birth: {type: String},
     img: {type: String , required: true}
 });
