@@ -42,6 +42,11 @@ class AdminCate extends Component{
 
 
   }
+  authorspath=()=>{
+    this.props.history.push('/admin/author/')
+  
+  
+  }
   
   deleteCate=(index)=>{
     console.log(index);
@@ -77,27 +82,16 @@ class AdminCate extends Component{
      {
        const cates=this.state.cates;
        const catelist =cates.map((cate,index)=>{
-         
-         
-         
          return <AdminCateList details={cate} key={index} index={index} update={this.handleChange}  handledeletecate={this.handledeletecate} Submit={this.Submit}/>
-         
-         
-        })
-        
-        console.log(catelist.index);
-       
+        })       
       return (
-      
-          
        <div>
-         
         <>
         <br/>
     <ButtonGroup size="lg" className="mb-2">
       <Button variant="light" className="btns" onClick={this.catepath}>Categories</Button>
       <Button variant="light" className="btns">Books</Button>
-      <Button variant="light"className="btns">Authors</Button>
+      <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
     
     
     </ButtonGroup>

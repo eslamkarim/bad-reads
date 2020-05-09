@@ -16,13 +16,6 @@ class AdminCateUpdate extends Component
         }
      }
      
-     Submit = () => {
-         
-     
-  
-        this.props.history.push('/admin/category/update')
-      
-    }
     handlecategoryNameChange = (e) => {
         this.setState({categoryName: e.target.value});
       }
@@ -37,12 +30,11 @@ class AdminCateUpdate extends Component
         var aformData = new FormData();
         aformData.append("categoryName",this.state.categoryName)
         aformData.append("categoryDescription",this.categoryDescription)
-        this.props.history.push('/admin/category/')
         axios.patch('http://localhost:4000/admin/category/'+this.props.location.state.details._id,{categoryName:this.state.categoryName,  categoryDescription:this.state.categoryDescription}
         ).then(response => {
-      
             console.log(response);
             console.log(response.data);
+            this.props.history.push('/admin/category/')
           }).catch(error => {
             console.log(error);
           });

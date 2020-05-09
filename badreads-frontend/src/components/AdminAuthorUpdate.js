@@ -15,14 +15,7 @@ class AdminAuthorUpdate extends Component
         img:null
         }
      }
-     
-     Submit = () => {
-         
-     
-  
-        this.props.history.push('/admin/author/update')
-      
-    }
+
     handleauthorNameChange = (e) => {
         this.setState({authorName: e.target.value});
       }
@@ -41,13 +34,12 @@ class AdminAuthorUpdate extends Component
         aformData.append("authorName",this.state.authorName)
         aformData.append("date_of_birth",this.state.date_of_birth)
         if(this.state.img) aformData.append("img",this.state.img)
-        this.props.history.push('/admin/author/')
         axios.patch('http://localhost:4000/admin/author/'+this.props.location.state.details._id, aformData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }).then(response => {
-      
+          this.props.history.push('/admin/author/')
             console.log(response);
             console.log(response.data);
           }).catch(error => {

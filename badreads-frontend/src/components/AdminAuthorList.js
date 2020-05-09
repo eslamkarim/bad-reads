@@ -101,7 +101,7 @@ deleteAuthor=(index)=>{
   <ButtonGroup size="lg" className="mb-2">
     <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
     <Button variant="light" className="btns">Books</Button>
-    <Button variant="light"className="btns">Authors</Button>
+    <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
   
   
   </ButtonGroup>
