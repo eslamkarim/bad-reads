@@ -10,7 +10,9 @@ import DataTableErrorBook from './data-table-error-book'
 
 const user = getUser();
 console.log(user);
-let userId = user.userId
+if (user) {
+    let userId = user.userId
+}
 
 
 
@@ -20,11 +22,13 @@ export default class Home extends Component {
       super(props);
       this.state = {
           usersBooks: [],
+          pageHeader: "All your Books"
 
       };
   }
 
-  componentDidMount() {
+  componentDidMount() {      
+      let userId = user.userId
       axios.get(`http://localhost:4000/userbook/${userId}`)
           .then(res => {
             const userBooks = res.data.map((val)=>{
@@ -45,6 +49,9 @@ export default class Home extends Component {
 
 
     all = () => {
+        var header = document.querySelector('#lefa')
+        header.innerHTML = "All your Books"
+        let userId = user.userId
         axios.get(`http://localhost:4000/userbook/${userId}`)
             .then(res => {
                 const userBooks = res.data.map((val)=>{
@@ -63,6 +70,28 @@ export default class Home extends Component {
 
     }
     readAction = (e,value) => {
+        switch (value) {
+            case "current":
+            
+                var header = document.querySelector('#lefa')
+                header.innerHTML = "Your Currently Reading Books"
+                break;
+            case "wtr":
+              
+                var header = document.querySelector('#lefa')
+                header.innerHTML = "Books you Wnat to Read"
+                break;
+            
+            case "read":
+
+                var header = document.querySelector('#lefa')
+                header.innerHTML = "Your Already Read Books"
+                break;
+            default:
+                var header = document.querySelector('#lefa')
+                header.innerHTML = "All your Books"
+                break;
+        }
         let userId = user.userId
         axios.get(`http://localhost:4000/userbook/${value}/${userId}`)
             .then(res => {
@@ -102,7 +131,7 @@ export default class Home extends Component {
   render() {
       return ( 
         <div className="parent">
-            <h1 className="grad">Pobular Books</h1>
+            <h1 className="grad" id="lefa">{this.state.pageHeader}</h1>
             <div className="mySidenav sidenav">
               <div className="sidenav" >
                 <ul className="navul">
