@@ -45,10 +45,11 @@ router.get('/author',async(req,res)=>{
  
  router.post('/author',upload.single('img'),async(req,res)=>{
      const url = req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname 
-     const {authorName,date_of_birth} = req.body;
+     const {authorName,authorInfo,date_of_birth} = req.body;
     const authorInstance = new authModel({
         authorName:authorName,
         date_of_birth:date_of_birth,
+        authorInfo:authorInfo,
         img: url,        
     })
     
@@ -58,16 +59,21 @@ router.get('/author',async(req,res)=>{
 }
 catch(err)
 {
+    console.log(err);
+    
     res.send(err);
 }
 
    })
     
 router.patch('/author/:id',upload.single('img'),async(req,res)=>{
-    try{ console.log(req.body);
-    
+    try{
+    if(req.file){
+        req.body.img= req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname
+    }    
    const author = await authModel.findByIdAndUpdate(req.params.id,{$set:req.body})
-      return res.json(author)  
+      
+   return res.json(author)  
 }
     catch(err)
     {

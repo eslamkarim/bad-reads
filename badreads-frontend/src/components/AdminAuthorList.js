@@ -15,58 +15,36 @@ class AdminAuthorList extends Component{
     ]
   }
 componentDidMount(){
-    axios.get("http://localhost:4000/admin/author")
+    this.updateView()
+}
+
+updateView = () =>{
+  axios.get("http://localhost:4000/admin/author")
      .then(res=>{
        const data = res.data;
        this.setState({authors:data})
        console.log(this.state);
-      
-       
-       
-
      })
 }
-
-
 onSubmit = () => {
-      
-  
-    this.props.history.push('/admin/author/create')
+  this.props.history.push('/admin/author/create')
   
 }
 
 Submit = (author) => {
-  
   this.props.history.push(  { pathname: '/admin/author/update', state : { details: author } })
-
 }
 
 catepath=()=>{
   this.props.history.push('/admin/category/')
-
-
 }
 
-deleteAuthor=(index)=>{
-  console.log(index);
-  
-  let authors =this.state.authors;
-  console.log(authors);
-  
-  authors.slice(index,1)
-  this.setState({
-    authors
-
-
-  })
-
-  }
   handledeleteauthor=(index)=>{
     console.log(this.state.authors[index]);
     axios.delete("http://localhost:4000/admin/author/"+this.state.authors[index]._id)
     .then(res=>{
-
-      this.props.history.push("/admin/author")
+      this.updateView()
+      this.props.history.push("/admin/author/")
     }).catch(error=>
     {
       console.log(error);
@@ -114,6 +92,7 @@ deleteAuthor=(index)=>{
     <tr>
       <th>ID </th>
       <th> Name</th>
+      <th>Information</th>
       <th>photo</th>
       <th>Date of Birth</th>
       <th>Actions</th>
