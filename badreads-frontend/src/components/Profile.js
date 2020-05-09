@@ -17,7 +17,7 @@ export default class Home extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          categoryCollection: [],
+          usersBooks: [],
           bookCollection: [],
           authorCollection: []
 
@@ -25,14 +25,18 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:4000/home/category')
+      let userId = user.userId
+      axios.get(`http://localhost:4000/userbook/${userId}`)
           .then(res => {
-              console.log(res.data.sort(() => Math.random() - 0.5))
-
-              this.setState({
-                  categoryCollection: res.data.slice(0, 5)
-              });
-              console.log(typeof (this.state.categoryCollection));
+            var userBooks = res.data.map((val)=>{
+                return val.bookId
+            })
+            console.log(res.data);
+            
+            this.setState({
+                usersBooks: userBooks
+            });
+              
           })
           .catch(function (error) {
               console.log(error);
@@ -53,12 +57,11 @@ export default class Home extends Component {
 
       axios.get('http://localhost:4000/home/book')
           .then(res => {
-              console.log(res.data.sort(() => Math.random() - 0.5))
 
               this.setState({
                   bookCollection: res.data
               });
-              console.log(typeof (this.state.bookCollection));
+              console.log(this.state.bookCollection);
           })
           .catch(function (error) {
               console.log(error);
@@ -66,7 +69,7 @@ export default class Home extends Component {
   }
 
   homeCategoryTable() {
-      return this.state.categoryCollection.map((data, i) => {
+      return this.state.usersBooks.map((data, i) => {
           return <HomeCategoryTable obj = {data} key = {i} />;
       });
   }
@@ -78,8 +81,11 @@ export default class Home extends Component {
   }
 
   homeBookTable() {
-      return this.state.bookCollection.map((data, i) => {
-          return <HomeBookTable obj = {data} key = {i} />;
+      console.log(this.state.usersBooks);
+      
+      return this.state.usersBooks.map((data, i) => {
+          console.log(data._id);
+              return <HomeBookTable obj = {data} key = {i} />;
       });
   }
 
