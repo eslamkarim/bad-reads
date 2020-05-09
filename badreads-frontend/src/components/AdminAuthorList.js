@@ -41,7 +41,11 @@ Submit = (author) => {
 
 }
 
+catepath=()=>{
+  this.props.history.push('/admin/category/')
 
+
+}
 
 deleteAuthor=(index)=>{
   console.log(index);
@@ -70,17 +74,7 @@ deleteAuthor=(index)=>{
     })
 
   }
-  // axios
-  //   .patch(`/api/clients/${client.id}`, {
-  //     name: this.client.name,
-  //     phone: this.client.phone,
-  //     email: this.client.email
-  //   })
-  //   .then(res => {
-  //     resolve(res.data.client);
-  //   })
-  //   .catch(err => console.log(err.response.data));
-
+  
 
     render()
     
@@ -105,7 +99,7 @@ deleteAuthor=(index)=>{
       <>
       <br/>
   <ButtonGroup size="lg" className="mb-2">
-    <Button variant="light" className="btns">Categories</Button>
+    <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
     <Button variant="light" className="btns">Books</Button>
     <Button variant="light"className="btns">Authors</Button>
   
