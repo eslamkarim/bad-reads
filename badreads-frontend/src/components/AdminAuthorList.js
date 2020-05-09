@@ -19,13 +19,14 @@ componentDidMount(){
      .then(res=>{
        const data = res.data;
        this.setState({authors:data})
-       console.log(res.data);
+       console.log(this.state);
       
        
        
 
      })
 }
+
 
 onSubmit = () => {
       
@@ -34,24 +35,71 @@ onSubmit = () => {
   
 }
 
+Submit = (author) => {
+  
+  this.props.history.push(  { pathname: '/admin/author/update', state : { details: author } })
+
+}
+
+
+
+deleteAuthor=(index)=>{
+  console.log(index);
+  
+  let authors =this.state.authors;
+  console.log(authors);
+  
+  authors.slice(index,1)
+  this.setState({
+    authors
+
+
+  })
+
+  }
+  handledeleteauthor=(index)=>{
+    console.log(this.state.authors[index]);
+    axios.delete("http://localhost:4000/admin/author/"+this.state.authors[index]._id)
+    .then(res=>{
+
+      this.props.history.push("/admin/author")
+    }).catch(error=>
+    {
+      console.log(error);
+      
+    })
+
+  }
+  // axios
+  //   .patch(`/api/clients/${client.id}`, {
+  //     name: this.client.name,
+  //     phone: this.client.phone,
+  //     email: this.client.email
+  //   })
+  //   .then(res => {
+  //     resolve(res.data.client);
+  //   })
+  //   .catch(err => console.log(err.response.data));
+
 
     render()
     
    {
      const authors=this.state.authors;
      const authorlist =authors.map((author,index)=>{
-       console.log(author);
        
        
        
-       return <AdminAuthor details={author} key={index} update={this.handleChange}/>
+       return <AdminAuthor details={author} key={index} index={index} update={this.handleChange}  handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
        
        
       })
-      console.log(authorlist[0]);
+      
+      console.log(authorlist.index);
      
     return (
-
+    
+        
      <div>
        
       <>
@@ -78,11 +126,12 @@ onSubmit = () => {
     </tr>
   </thead>
   <tbody>
-<tr>
+    
+
   
 {authorlist}
-</tr>
-  
+
+
   
   </tbody>
 </Table>

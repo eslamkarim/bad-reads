@@ -21,6 +21,9 @@ import AdminAuthorList from './components/AdminAuthorList';
 import AdminAuthorCreate from './components/AdminAuthorCreate';
 import AdminAuthor from './components/AdminAuthor';
 
+import AdminAuthorUpdate from './components/AdminAuthorUpdate';
+
+
 
 class App extends Component {
   constructor(props){
@@ -64,6 +67,9 @@ class App extends Component {
                     <Route exact path='/' component={Home}/>
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
+                     <Route exact path='/admin/author/update/' component={AdminAuthorUpdate}/>
+
+                 
                     {/* <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                      */}

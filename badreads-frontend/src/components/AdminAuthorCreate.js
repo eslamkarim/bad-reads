@@ -27,11 +27,13 @@ handleAuthor = () => {
   aformData.append("authorName",this.state.authorName)
   aformData.append("date_of_birth",this.state.date_of_birth)
   aformData.append("img",this.state.img)
+  this.props.history.push('/admin/author/')
   axios.post('http://localhost:4000/admin/author', aformData,{
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   }).then(response => {
+
       console.log(response);
       console.log(response.data);
     }).catch(error => {
