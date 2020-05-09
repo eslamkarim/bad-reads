@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import DataTable from './data-table-book';
 import './author.css'
-
+import DataTableError from './data-table-error-book'
 export default class UsersId extends Component {
 
     constructor(props) {
@@ -31,11 +31,14 @@ export default class UsersId extends Component {
     }
 
     dataTable() {
-        console.log(this.state.books);
-
-        return this.state.books.map((data, i) => {
-            return <DataTable obj={data} key={i} />;
-        });
+        if (this.state.books.length == 0) {
+            return <DataTableError />
+        }
+        else {
+            return this.state.books.map((data, i) => {
+                return <DataTable obj={data} key={i} />;
+            });
+        }
     }
 
 
@@ -45,8 +48,8 @@ export default class UsersId extends Component {
             <center className="center-1">
                 <h1 className="grad" id="boys"> ❤️ <span className="grad">Author Information </span> <span id="boys"> ❤️ </span>  </h1>
 
-                <div class="container">
-                    <div class="avatar-flip">
+                <div className="containerr">
+                    <div className="avatar-flip">
                         <img className="img" src={this.state.usersCollection.img} />
                         <img className="img" src={this.state.usersCollection.img} />
 

@@ -44,9 +44,8 @@ router.get('/author',async(req,res)=>{
 
  
  router.post('/author',upload.single('img'),async(req,res)=>{
-     const url = req.protocol + '://' + req.get('host') + 'authors' + req.file.originalname 
+     const url = req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname 
      const {authorName,date_of_birth} = req.body;
-     console.log(authorName);
     const authorInstance = new authModel({
         authorName:authorName,
         date_of_birth:date_of_birth,
@@ -64,8 +63,9 @@ catch(err)
 
    })
     
-router.patch('/author/:id',async(req,res)=>{
-    try{
+router.patch('/author/:id',upload.single('img'),async(req,res)=>{
+    try{ console.log(req.body);
+    
    const author = await authModel.findByIdAndUpdate(req.params.id,{$set:req.body})
       return res.json(author)  
 }
@@ -80,10 +80,12 @@ router.patch('/author/:id',async(req,res)=>{
 
 router.delete('/author/:id',async(req,res)=>{
     try {
+        console.log(req);
         const author = await authModel.findByIdAndDelete(req.params.id)
         return res.json(author)
+        
     } catch (error) {
-        res.send(err);
+        res.send(error);
     } 
     
 
@@ -133,6 +135,8 @@ router.get('/book',async(req,res)=>{
  router.patch('/book/:id',async(req,res)=>{
      try{
     const book = await bookModel.findByIdAndUpdate(req.params.id,{$set:req.body})
+    console.log(req.body);
+    
        return res.json(book)  
  }
      catch(err)

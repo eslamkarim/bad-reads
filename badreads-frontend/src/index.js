@@ -8,18 +8,20 @@ import Register from './components/Register';
 import Logout from './components/logout';
 import Profile from './components/Profile'
 import Author from './components/author'
-import AuthorId from './components/authorId'
 import Book_Page from './components/Book_Page'
 import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
 import { getUser } from './utils/common';
 import UsersId from './components/authorsId'
-
+import Category from './components/category'
 import Home from './components/home'
 import AdminAuthorList from './components/AdminAuthorList';
 import AdminAuthorCreate from './components/AdminAuthorCreate';
 import AdminAuthor from './components/AdminAuthor';
+
+import AdminAuthorUpdate from './components/AdminAuthorUpdate';
+
 
 
 class App extends Component {
@@ -56,6 +58,8 @@ class App extends Component {
                     { getUser() && <Route exact path='/' component={Profile}/>}
                     <Route exact path='/author' component={Users}/>
                     <Route exact path='/author/:id' component={UsersId}/>
+                    <Route exact path='/category' component={Category}/>
+
                     {/* <Route exact path='/categories' component={Categories}/> */}
                     <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/admin/login' render={(props) => <AdminLogin {...props} checkUser={this.checkUser.bind(this)} />}/>
@@ -66,11 +70,10 @@ class App extends Component {
 
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
+                     <Route exact path='/admin/author/update/' component={AdminAuthorUpdate}/>
+
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
-                    
-
-
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Redirect to="/404" />
             </Switch>

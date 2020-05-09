@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import DataTable from './data-table';
-import DataTableError from './data-table-error';
-
+import DataTable from './data-table-category';
 import './author.css'
+import DataTableError from './data-table-error-category'
 
-export default class Users extends Component {
+
+export default class Category extends Component {
 
     constructor(props) {
         super(props);
@@ -13,9 +13,11 @@ export default class Users extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/author')
+        axios.get('http://localhost:4000/category')
             .then(res => {
                 this.setState({ usersCollection: res.data });
+                console.log(res.data);
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -23,14 +25,13 @@ export default class Users extends Component {
     }
 
     dataTable() {
-        if (this.state.usersCollection.length == 0){
+        if (this.state.usersCollection.length == 0) {
             return <DataTableError />
         }
-        else{
-            return this.state.usersCollection.map((data, i) => {            
+        else {
+            return this.state.usersCollection.map((data, i) => {
                 return <DataTable obj={data} key={i} />;
             });
-            
         }
     }
 
@@ -38,7 +39,7 @@ export default class Users extends Component {
         return (
 
             <center>
-                <h1 className="grad" id="boys"> ❤️ <span className="grad">Our Authors </span> <span id="boys"> ❤️ </span>  </h1>
+                <h1 className="grad" id="boys"> ❤️ <span className="grad"> Categories </span> <span id="boys"> ❤️ </span>  </h1>
                 <div className="i-am-centered" >
 
                     <div className="row boy" >

@@ -7,7 +7,7 @@ class HomeAuthorTable extends Component {
     render() {
         let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
         return (
-            <div className="col-md-3 col-sm-6 item">
+            <div className="col-lg-6 col-md-6 col-sm-6 item">
                 <div className="card item-card card-block">
                     <a href={bUrl}>
                             <img className="img" src={this.props.obj.img} />

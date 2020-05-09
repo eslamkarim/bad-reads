@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { render } from 'react-dom';
-import { BrowserRouter, Switch, Route, Redirect, Router } from 'react-router-dom';
-import UsersId from './authorsId'
-
 import './author.css'
-import axios from 'axios';
 
 class DataTable extends Component {
 
 
     
     render() {
+        console.log(this);
+
         let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
         return (
             <div className="col-md-3 col-sm-6 item">

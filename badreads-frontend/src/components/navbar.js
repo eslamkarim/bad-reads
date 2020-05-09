@@ -41,8 +41,13 @@ class NavBar extends Component {
                     </li>
                     <li>
                         <Link to="/author">
-                        <img src="/images/author-book-512.png" alt="" id="small-logo1"/>
+                        {/* <img src="/images/author-book-512.png" alt="" id="small-logo1"/> */}
                         Authors
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/category">
+                        Categories
                         </Link>
                     </li>
                     <li>
