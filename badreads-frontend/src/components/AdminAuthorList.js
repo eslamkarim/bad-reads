@@ -15,54 +15,34 @@ class AdminAuthorList extends Component{
     ]
   }
 componentDidMount(){
-    axios.get("http://localhost:4000/admin/author")
+    this.updateView()
+}
+
+updateView = () =>{
+  axios.get("http://localhost:4000/admin/author")
      .then(res=>{
        const data = res.data;
        this.setState({authors:data})
-       console.log(this.state);
-      
-       
-       
-
      })
 }
-
-
 onSubmit = () => {
-      
-  
-    this.props.history.push('/admin/author/create')
+  this.props.history.push('/admin/author/create')
   
 }
 
 Submit = (author) => {
-  
   this.props.history.push(  { pathname: '/admin/author/update', state : { details: author } })
-
 }
 
+catepath=()=>{
+  this.props.history.push('/admin/category/')
+}
 
-
-deleteAuthor=(index)=>{
-  console.log(index);
-  
-  let authors =this.state.authors;
-  console.log(authors);
-  
-  authors.slice(index,1)
-  this.setState({
-    authors
-
-
-  })
-
-  }
   handledeleteauthor=(index)=>{
-    console.log(this.state.authors[index]);
     axios.delete("http://localhost:4000/admin/author/"+this.state.authors[index]._id)
     .then(res=>{
-
-      this.props.history.push("/admin/author")
+      this.updateView()
+      this.props.history.push("/admin/author/")
     }).catch(error=>
     {
       console.log(error);
@@ -70,44 +50,24 @@ deleteAuthor=(index)=>{
     })
 
   }
-  // axios
-  //   .patch(`/api/clients/${client.id}`, {
-  //     name: this.client.name,
-  //     phone: this.client.phone,
-  //     email: this.client.email
-  //   })
-  //   .then(res => {
-  //     resolve(res.data.client);
-  //   })
-  //   .catch(err => console.log(err.response.data));
+  
 
-
-    render()
-    
+  render()
    {
      const authors=this.state.authors;
      const authorlist =authors.map((author,index)=>{
-       
-       
-       
        return <AdminAuthor details={author} key={index} index={index} update={this.handleChange}  handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
-       
-       
       })
-      
-      console.log(authorlist.index);
-     
-    return (
-    
-        
+           
+    return (  
      <div>
        
       <>
       <br/>
   <ButtonGroup size="lg" className="mb-2">
-    <Button variant="light" className="btns">Categories</Button>
+    <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
     <Button variant="light" className="btns">Books</Button>
-    <Button variant="light"className="btns">Authors</Button>
+    <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
   
   
   </ButtonGroup>
@@ -120,6 +80,7 @@ deleteAuthor=(index)=>{
     <tr>
       <th>ID </th>
       <th> Name</th>
+      <th>Information</th>
       <th>photo</th>
       <th>Date of Birth</th>
       <th>Actions</th>

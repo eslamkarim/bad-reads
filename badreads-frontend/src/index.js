@@ -17,10 +17,14 @@ import UsersId from './components/authorsId'
 import Category from './components/category'
 import Home from './components/home'
 import AdminAuthorList from './components/AdminAuthorList';
+import AdminCateList from './components/AdminCateList';
 import AdminAuthorCreate from './components/AdminAuthorCreate';
+import AdminCateCreate from './components/AdminCateCreate';
 import AdminAuthor from './components/AdminAuthor';
-
+import AdminCate from './components/AdminCate'
 import AdminAuthorUpdate from './components/AdminAuthorUpdate';
+import AdminCateUpdate from './components/AdminCateUpdate'
+
 
 
 
@@ -71,6 +75,10 @@ class App extends Component {
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
                      <Route exact path='/admin/author/update/' component={AdminAuthorUpdate}/>
+                     <Route exact path='/admin/category' component={AdminCate}/>
+                     <Route exact path='/admin/category/create' component={AdminCateCreate}/>
+                     <Route exact path='/admin/category/update' component={AdminCateUpdate}/>
+
 
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
