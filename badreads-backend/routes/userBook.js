@@ -2,6 +2,58 @@ const express = require('express')
 const router = express.Router()
 const usersBooksModel = require('../models/usersBooks')
 
+
+
+
+
+
+router.get('/current/:userId',async(req , res)=>{
+  userId = req.params.userId
+  console.log(userId);
+  
+  try {
+      const books = await usersBooksModel.find({userId: userId,action: "Current Reading"}).populate('bookId')
+      console.log(books + "fdmskfmsddklg");
+      
+      res.json(books)
+      
+  } catch (error) {
+      res.send(error)
+  }
+
+})
+
+router.get('/wtr/:userId',async(req , res)=>{
+  userId = req.params.userId
+  console.log(userId);
+  
+  try {
+      const books = await usersBooksModel.find({userId: userId,action: "Want to Read"}).populate('bookId')
+      console.log(books + "fdmskfmsddklg");
+      
+      res.json(books)
+      
+  } catch (error) {
+      res.send(error)
+  }
+
+})
+
+router.get('/read/:userId',async(req , res)=>{
+  userId = req.params.userId
+  console.log(userId);
+  
+  try {
+      const books = await usersBooksModel.find({userId: userId,action: "Read"}).populate('bookId')
+      console.log(books + "fdmskfmsddklg");
+      
+      res.json(books)
+      
+  } catch (error) {
+      res.send(error)
+  }
+
+})
 router.get('/:userId/:bookId', async(req,res)=>{
   try{
     const action = await usersBooksModel.findOne({bookId: req.params.bookId,userId: req.params.userId,})
@@ -11,14 +63,14 @@ router.get('/:userId/:bookId', async(req,res)=>{
   }
 })
 
-router.post('/:userId/:bookId', async(req,res)=>{
+router.put('/:userId/:bookId', async(req,res)=>{
   try{
     const action = await usersBooksModel.update({
-      Bookid: req.params.bookId,
-      usesrid: req.params.userId,
+      bookId: req.params.bookId,
+      userId: req.params.userId,
     },{
-      Bookid: req.params.bookId,
-      usesrid: req.params.userId,
+      bookId: req.params.bookId,
+      userId: req.params.userId,
       action: req.body.action
     },{
       upsert: true
@@ -51,6 +103,7 @@ router.post('/',async(req , res)=>{
   }
   })
 
+  
   router.get('/:userId',async(req , res)=>{
     userId = req.params.userId
     console.log(userId);
@@ -66,5 +119,6 @@ router.post('/',async(req , res)=>{
     }
 
 })
+
 
 module.exports = router

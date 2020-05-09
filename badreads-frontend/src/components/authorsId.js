@@ -3,7 +3,7 @@ import axios from 'axios';
 import DataTable from './data-table-book';
 import './author.css'
 import DataTableError from './data-table-error-book'
-var moment = require('moment');
+import moment from 'moment'
 
 export default class UsersId extends Component {
 
