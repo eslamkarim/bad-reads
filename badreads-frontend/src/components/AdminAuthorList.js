@@ -23,7 +23,6 @@ updateView = () =>{
      .then(res=>{
        const data = res.data;
        this.setState({authors:data})
-       console.log(this.state);
      })
 }
 onSubmit = () => {
@@ -40,7 +39,6 @@ catepath=()=>{
 }
 
   handledeleteauthor=(index)=>{
-    console.log(this.state.authors[index]);
     axios.delete("http://localhost:4000/admin/author/"+this.state.authors[index]._id)
     .then(res=>{
       this.updateView()
@@ -54,24 +52,14 @@ catepath=()=>{
   }
   
 
-    render()
-    
+  render()
    {
      const authors=this.state.authors;
      const authorlist =authors.map((author,index)=>{
-       
-       
-       
        return <AdminAuthor details={author} key={index} index={index} update={this.handleChange}  handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
-       
-       
       })
-      
-      console.log(authorlist.index);
-     
-    return (
-    
-        
+           
+    return (  
      <div>
        
       <>

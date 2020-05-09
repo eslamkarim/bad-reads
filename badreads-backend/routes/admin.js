@@ -58,9 +58,7 @@ router.get('/author',async(req,res)=>{
         return res.json(author)
 }
 catch(err)
-{
-    console.log(err);
-    
+{    
     res.send(err);
 }
 
@@ -139,19 +137,12 @@ router.get('/book',async(req,res)=>{
     })
      
  router.patch('/book/:id',async(req,res)=>{
-     try{
-    const book = await bookModel.findByIdAndUpdate(req.params.id,{$set:req.body})
-    console.log(req.body);
-    
-       return res.json(book)  
- }
-     catch(err)
-     {
+    try{
+        const book = await bookModel.findByIdAndUpdate(req.params.id,{$set:req.body})    
+        return res.json(book)  
+    }catch(err){
         res.send(err);
- 
-     }
- 
-     
+    } 
  })
  
  router.delete('/book/:id',async(req,res)=>{

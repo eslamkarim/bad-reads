@@ -11,19 +11,16 @@ class AdminCate extends Component{
       ]
     }
   componentDidMount(){
-      axios.get("http://localhost:4000/admin/category")
-       .then(res=>{
-         const data = res.data;
-         this.setState({cates:data})
-         console.log(this.state);
-        
-         
-         
-  
-       })
+    this.updateView()   
   }
   
-  
+  updateView = () => {
+    axios.get("http://localhost:4000/admin/category")
+    .then(res=>{
+      const data = res.data;
+      this.setState({cates:data})
+    })
+  }
   onSubmit = () => {
         
     
@@ -48,25 +45,10 @@ class AdminCate extends Component{
   
   }
   
-  deleteCate=(index)=>{
-    console.log(index);
-    
-    let cates =this.state.cates;
-    console.log(cates);
-    
-    cates.slice(index,1)
-    this.setState({
-      cates
-  
-  
-    })
-  
-    }
     handledeletecate=(index)=>{
-      console.log(this.state.cates[index]);
       axios.delete("http://localhost:4000/admin/category/"+this.state.cates[index]._id)
       .then(res=>{
-  
+        this.updateView()
         this.props.history.push("/admin/category")
       }).catch(error=>
       {

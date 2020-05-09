@@ -10,7 +10,6 @@ class AdminAuthorUpdate extends Component
     constructor(props){
         
         super(props);
-        console.log(this.props.details);
         this.state={
         authorName:this.props.location.state.details.authorName,
         authorInfo:this.props.location.state.details.authorInfo,
@@ -34,9 +33,7 @@ class AdminAuthorUpdate extends Component
         this.setState({authorInfo: e.target.value});
       }
       
-      handleAuthor = () => {
-          console.log(this.props.location.state.details );
-          
+      handleAuthor = () => {          
         var aformData = new FormData();
         aformData.append("authorName",this.state.authorName)
         aformData.append("authorInfo",this.state.authorInfo)
@@ -48,57 +45,43 @@ class AdminAuthorUpdate extends Component
           }
         }).then(response => {
           this.props.history.push('/admin/author/')
-            console.log(response);
-            console.log(response.data);
           }).catch(error => {
             console.log(error);
           });
       }
-      
-      updateAuthor =(e)=>{
-        
-        console.log(e.target.value);
-        
-      }
-   
-   
-        render()
-        { 
-          return (
-           <div>
-               <Form>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Author Name</Form.Label>
-          <Form.Control type="text" name="authorName" value={this.state.authorName} onChange={this.handleauthorNameChange}/>
-          <Form.Label>Author Information</Form.Label>
-          <Form.Control type="text" name="authorInfo" value={this.state.authorInfo} onChange={this.handleauthorInfoChange}/>
-          <Form.Label>Author Birthday</Form.Label>
-          <DatePicker selected={this.state.date_of_birth} 
-          onChange={this.handledate_of_birthChange} 
-          format='yyyy-MM-dd' 
-          placeholder='Enter date' 
-          dateFormat="yyyy-MM-dd" 
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          /><br />
-          <Form.Label>Author Photo</Form.Label>
-          <div className="form-group">
-            <input type="file" name="img" onChange={this.handleImageChange}/>
-          </div>    
-        </Form.Group>
-      
-       
-        <Button variant="primary" type="button" onClick={this.handleAuthor}>
-          Submit
-        </Button>
-      </Form>
-             
+    
+  render()
+    { 
+      return (
+        <div>
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Author Name</Form.Label>
+              <Form.Control type="text" name="authorName" value={this.state.authorName} onChange={this.handleauthorNameChange}/>
+              <Form.Label>Author Information</Form.Label>
+              <Form.Control type="text" name="authorInfo" value={this.state.authorInfo} onChange={this.handleauthorInfoChange}/>
+              <Form.Label>Author Birthday</Form.Label>
+              <DatePicker selected={this.state.date_of_birth} 
+              onChange={this.handledate_of_birthChange} 
+              format='yyyy-MM-dd' 
+              placeholder='Enter date' 
+              dateFormat="yyyy-MM-dd" 
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              /><br />
+              <Form.Label>Author Photo</Form.Label>
+              <div className="form-group">
+                <input type="file" name="img" onChange={this.handleImageChange}/>
+              </div>    
+            </Form.Group>
+            <Button variant="primary" type="button" onClick={this.handleAuthor}>
+              Submit
+            </Button>
+          </Form> 
         </div>
-      
-      
-        )
-        }
+      )
+    }
       
    
    
