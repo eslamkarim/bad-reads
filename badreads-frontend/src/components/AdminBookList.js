@@ -12,7 +12,7 @@ class AdminBookList extends Component{
       
       <tr>
    
-      <td>{this.props.details.bookId}</td>
+      <td>{this.props.details._id}</td>
       <td>{this.props.details.bookName}</td>
       <td>{this.props.details.category}</td>
       <td>{this.props.details.author}</td>

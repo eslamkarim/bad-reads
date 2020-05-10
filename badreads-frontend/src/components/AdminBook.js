@@ -93,8 +93,8 @@ catepath=()=>{
       <th>ID </th>
       <th> Book Name</th>
       <th>Category Id</th>
-      <th>photo</th>
       <th>Author Id</th>
+      <th>photo</th>
       <th>Actions</th>
     </tr>
   </thead>

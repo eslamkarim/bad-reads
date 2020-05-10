@@ -26,12 +26,7 @@ class AdminBookCreate extends Component{
 handlebookNameChange = (e) => {
   this.setState({bookName: e.target.value});
 }
-handleauthorChange = (e) => {
-    this.setState({author: e.target.value});
-  }
-  handlecategoryChange = (e) => {
-    this.setState({category: e.target.value});
-  }
+ 
 handleImageChange=(e)=>{  
   this.setState({img: e.target.files[0]});    
 }
@@ -85,10 +80,13 @@ return items;
 
 onDropdownSelected = (e)=> { 
   console.log("THE VAL", e.target.value);
+  this.setState({author: e.target.value});
+
    //here you will see the current selected value of the select input 
   } 
   onCategoriesDropdownSelected = (e)=> { 
     console.log("THE VAL", e.target.value);
+    this.setState({category: e.target.value});
      //here you will see the current selected value of the select input 
     } 
 
