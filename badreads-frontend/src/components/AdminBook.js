@@ -9,6 +9,8 @@ import AdminAuthorCreate from './AdminAuthorCreate'
 class AdminBook extends Component{
   state={
     books:[
+    ],
+    authors:[
     ]
   }
 componentDidMount(){
@@ -22,8 +24,21 @@ updateView = () =>{
        this.setState({books:data})
      })
 }
-onSubmit = () => {
-  this.props.history.push('/admin/book/create')
+onSubmit = async() => {
+  await axios.get("http://localhost:4000/admin/author")
+  .then(response => {
+      var authors=response.data
+      axios.get("http://localhost:4000/admin/category")
+      .then(response => {
+        console.log(response.data);
+          var categories=response.data
+          this.props.history.push({pathname: '/admin/book/create', state : { authors: authors, categories: categories }})
+        }).catch(error => {
+        console.log(error);
+      });
+    }).catch(error => {
+    console.log(error);
+  });
   
 }
 

@@ -1,4 +1,4 @@
-import React ,{Component, Fragment} from 'react';
+import React ,{Component, Fragment, Input} from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
@@ -15,31 +15,9 @@ class AdminBookCreate extends Component{
     img:null,
     author:'',
     category: false,
-    //  authors:[],
-     categorys:[]
     }
 
-
  }
-
- componentDidMount(){
-  axios.get("http://localhost:4000/admin/author")
-  .then(response => {
-      console.log(response.data);
-      this.setState({authors:response.data});
-
-      
-  }).catch(error => {
-    console.log(error);
-  });
-  axios.get("http://localhost:4000/admin/category")
-  .then(response => {
-      this.setState({categorys: response.data});
-
-  }).catch(error => {
-    console.log(error);
-  });
-}
 
  handlebookIdChange = (e) => {
   this.setState({bookId: e.target.value});
@@ -83,20 +61,36 @@ handleBook = () => {
   }
 }
 
-createSelectItems() { 
-  console.log(this.state.authors);
-  
+createSelectItems = () => { 
    let items = []; 
-//   for (let i = 0; i <= this.state.authors.length; i++){ 
-//   items.push(<option key={this.state.authors[i]._id} value={this.state.authors[i].authorName}>{this.state.authors[i].authorName}</option>); 
-// //here I will be creating my options dynamically based on
-//  //what props are currently passed to the parent component 
-// }
- return items; }
-onDropdownSelected(e) { 
+  for (var i = 0; i < this.props.location.state.authors.length; i++){ 
+  items.push(
+  <Fragment>
+    <option value={this.props.location.state.authors[i]._id}>{this.props.location.state.authors[i].authorName}</option>
+  </Fragment>); 
+}
+ return items; 
+}
+
+createCategoriesSelectItems = () => { 
+  let items = []; 
+ for (var i = 0; i < this.props.location.state.categories.length; i++){ 
+ items.push(
+ <Fragment>
+   <option value={this.props.location.state.categories[i]._id}>{this.props.location.state.categories[i].categoryName}</option>
+ </Fragment>); 
+}
+return items; 
+}
+
+onDropdownSelected = (e)=> { 
   console.log("THE VAL", e.target.value);
    //here you will see the current selected value of the select input 
   } 
+  onCategoriesDropdownSelected = (e)=> { 
+    console.log("THE VAL", e.target.value);
+     //here you will see the current selected value of the select input 
+    } 
 
 WarningBanner = () => {
   if (!this.state.errorStatus) {
@@ -112,7 +106,8 @@ WarningBanner = () => {
 }
 
 render()
-  {
+  {    
+
     return (
      <div>
       <this.WarningBanner />
@@ -121,12 +116,15 @@ render()
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Book Name</Form.Label>
               <Form.Control type="text" name="bookName" value={this.state.bookName} onChange={this.handlebookNameChange}/>
+              <Form.Label>Authors</Form.Label>
+              
+              <select id="authors" onChange={this.onDropdownSelected}>
+                <this.createSelectItems />
+              </select><br/>
               <Form.Label>Category</Form.Label>
-              <input type="select" onChange={this.onDropdownSelected} label="Multiple Select" multiple> {this.createSelectItems()} </input> 
-              {/* <Form.Control type="text" name="category" value={this.state.category} onChange={this.handlecategoryChange}/> */}
-              <Form.Label>Author</Form.Label>
-              <Form.Control type="text" name="author" value={this.state.author} onChange={this.handleauthorChange}/>
-
+              <select id="categories" onChange={this.onCategoriesDropdownSelected}>
+                <this.createCategoriesSelectItems />
+              </select><br/>
               <Form.Label>Book Photo</Form.Label>
               <div className="form-group">
                 <input type="file" name="img" onChange={this.handleImageChange}/>

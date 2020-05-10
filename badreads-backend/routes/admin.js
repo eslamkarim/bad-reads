@@ -32,11 +32,15 @@ router.get('/author',async(req,res)=>{
 
    try{
      const authors = await authModel.find({})
+     console.log(authors);
+     
      return res.json(authors)
         
     }
         catch (err)
         {
+            console.log(err);
+            
          res.send(err);
         }
  })
