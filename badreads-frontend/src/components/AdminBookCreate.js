@@ -58,6 +58,10 @@ handleBook = () => {
 
 createSelectItems = () => { 
    let items = []; 
+   items.push(
+    <Fragment>
+      <option value={null} disabled selected>Please Select an author</option>
+    </Fragment>); 
   for (var i = 0; i < this.props.location.state.authors.length; i++){ 
   items.push(
   <Fragment>
@@ -69,6 +73,10 @@ createSelectItems = () => {
 
 createCategoriesSelectItems = () => { 
   let items = []; 
+  items.push(
+    <Fragment>
+      <option value={null} disabled selected>Please Select a category</option>
+    </Fragment>); 
  for (var i = 0; i < this.props.location.state.categories.length; i++){ 
  items.push(
  <Fragment>
@@ -81,14 +89,11 @@ return items;
 onDropdownSelected = (e)=> { 
   console.log("THE VAL", e.target.value);
   this.setState({author: e.target.value});
-
-   //here you will see the current selected value of the select input 
-  } 
-  onCategoriesDropdownSelected = (e)=> { 
-    console.log("THE VAL", e.target.value);
-    this.setState({category: e.target.value});
-     //here you will see the current selected value of the select input 
-    } 
+} 
+onCategoriesDropdownSelected = (e)=> { 
+  console.log("THE VAL", e.target.value);
+  this.setState({category: e.target.value});
+} 
 
 WarningBanner = () => {
   if (!this.state.errorStatus) {

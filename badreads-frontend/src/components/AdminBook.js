@@ -49,6 +49,12 @@ Submit = (book) => {
 catepath=()=>{
   this.props.history.push('/admin/category/')
 }
+bookpath=()=>{
+  this.props.history.push('/admin/book/')
+}
+authorspath=()=>{
+  this.props.history.push('/admin/author/')
+}
 
   handledeletebook=(index)=>{
     axios.delete("http://localhost:4000/admin/book/"+this.state.books[index]._id)

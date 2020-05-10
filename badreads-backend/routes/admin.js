@@ -119,7 +119,7 @@ router.get('/book',async(req,res)=>{
  
  router.post('/book',upload.single('img'),async(req,res,next)=>{
     const {bookName,author,category} = req.body;
-    const url = req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname 
+    const url = req.protocol + '://' + req.get('host') + '/books/' + req.file.originalname 
     const bookInstance = new bookModel({
         bookName:bookName,
         author:author,

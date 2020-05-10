@@ -36,13 +36,12 @@ class AdminCate extends Component{
   
   catepath=()=>{
     this.props.history.push('/admin/category/')
-
-
   }
   authorspath=()=>{
     this.props.history.push('/admin/author/')
-  
-  
+  }
+  bookpath=()=>{
+    this.props.history.push('/admin/book/')
   }
   
     handledeletecate=(index)=>{
@@ -72,7 +71,7 @@ class AdminCate extends Component{
         <br/>
     <ButtonGroup size="lg" className="mb-2">
       <Button variant="light" className="btns" onClick={this.catepath}>Categories</Button>
-      <Button variant="light" className="btns">Books</Button>
+      <Button variant="light" className="btns" onClick={this.bookpath}>Books</Button>
       <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
     
     
