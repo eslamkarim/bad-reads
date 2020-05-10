@@ -24,6 +24,9 @@ import AdminAuthor from './components/AdminAuthor';
 import AdminCate from './components/AdminCate'
 import AdminAuthorUpdate from './components/AdminAuthorUpdate';
 import AdminCateUpdate from './components/AdminCateUpdate'
+import AdminBookUpdate from './components/AdminBookUpdate';
+import AdminBook from './components/AdminBook';
+import AdminBookCreate from './components/AdminBookCreate';
 
 
 
@@ -78,6 +81,12 @@ class App extends Component {
                      <Route exact path='/admin/category' component={AdminCate}/>
                      <Route exact path='/admin/category/create' component={AdminCateCreate}/>
                      <Route exact path='/admin/category/update' component={AdminCateUpdate}/>
+
+
+                     <Route exact path='/admin/book' component={AdminBook}/>
+                     <Route exact path='/admin/book/create' component={AdminBookCreate}/>
+                     <Route exact path='/admin/book/update' component={AdminBookUpdate}/>
+
 
 
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />

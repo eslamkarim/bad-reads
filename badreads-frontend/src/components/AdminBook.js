@@ -1,0 +1,107 @@
+import React ,{Component} from 'react';
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import {ButtonGroup} from 'react-bootstrap';
+import {Table} from 'react-bootstrap';
+import AdminBookList from './AdminBookList'
+import AdminAuthorCreate from './AdminAuthorCreate'
+
+class AdminBook extends Component{
+  state={
+    books:[
+    ]
+  }
+componentDidMount(){
+    this.updateView()
+}
+
+updateView = () =>{
+  axios.get("http://localhost:4000/admin/book")
+     .then(res=>{
+       const data = res.data;
+       this.setState({books:data})
+     })
+}
+onSubmit = () => {
+  this.props.history.push('/admin/book/create')
+  
+}
+
+Submit = (book) => {
+  this.props.history.push(  { pathname: '/admin/book/update', state : { details: book } })
+}
+
+catepath=()=>{
+  this.props.history.push('/admin/category/')
+}
+
+  handledeletebook=(index)=>{
+    axios.delete("http://localhost:4000/admin/book/"+this.state.books[index]._id)
+    .then(res=>{
+      this.updateView()
+      this.props.history.push("/admin/book/")
+    }).catch(error=>
+    {
+      console.log(error);
+      
+    })
+
+  }
+  
+
+  render()
+   {
+     const books=this.state.books;
+     const booklist =books.map((book,index)=>{
+       return <AdminBookList details={book} key={index} index={index} update={this.handleChange}  handledeletebook={this.handledeletebook} Submit={this.Submit}/>
+      })
+           
+    return (  
+     <div>
+       
+      <>
+      <br/>
+  <ButtonGroup size="lg" className="mb-2">
+    <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
+    <Button variant="light" className="btns" onClick={this.bookpath}>Books</Button>
+    <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
+  
+  
+  </ButtonGroup>
+  <Button onClick={this.onSubmit}>+
+ </Button>
+</>
+  
+<Table striped bordered hover className="table">
+  <thead>
+    <tr>
+      <th>ID </th>
+      <th> Book Name</th>
+      <th>Category Id</th>
+      <th>photo</th>
+      <th>Author Id</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+
+  
+{booklist}
+
+
+  
+  </tbody>
+</Table>
+
+    
+
+   
+    
+     </div>
+
+  );
+  }
+
+}
+export default AdminBook
