@@ -88,11 +88,9 @@ return items;
 }
 
 onDropdownSelected = (e)=> { 
-  console.log("THE VAL", e.target.value);
   this.setState({author: e.target.value});
 } 
 onCategoriesDropdownSelected = (e)=> { 
-  console.log("THE VAL", e.target.value);
   this.setState({category: e.target.value});
 } 
 

@@ -34,7 +34,6 @@ onSubmit = async() => {
       var authors=response.data
       axios.get("http://localhost:4000/admin/category")
       .then(response => {
-        console.log(response.data);
           var categories=response.data
           this.props.history.push({pathname: '/admin/book/create', state : { authors: authors, categories: categories }})
         }).catch(error => {

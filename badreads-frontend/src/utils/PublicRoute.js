@@ -4,7 +4,6 @@ import { getToken } from './common';
  
 // handle the public routes
 function PublicRoute({ component: Component, ...rest }) {
-    console.log(rest);
   return (
     <Route
       {...rest}

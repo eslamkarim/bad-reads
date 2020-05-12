@@ -27,7 +27,7 @@ class AdminLogin extends Component {
     axios.post('http://localhost:4000/admin/login', { email: this.state.email, password: this.state.password }).then(response => {
       setUserSession(response.data.token, response.data.user);
       this.checkUser();      
-      this.props.history.push('/dashboard');
+      this.props.history.push('/admin/author');
     }).catch(error => {
       this.setState({error: error.response.data.message});
       this.setState({errorStatus: error.response.data.error});

@@ -20,7 +20,6 @@ export default class UsersId extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-
             })
 
         axios.get(`http://localhost:4000/author/book/${id}`)
