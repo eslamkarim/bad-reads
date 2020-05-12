@@ -8,7 +8,6 @@ class AdminCateUpdate extends Component
     constructor(props){
         
         super(props);
-        console.log(this.props.details);
         this.state={
             categoryName:this.props.location.state.details.categoryName,
             categoryDescription:this.props.location.state.details.categoryDescription,
@@ -25,15 +24,11 @@ class AdminCateUpdate extends Component
     
       
       handleCate = () => {
-          console.log(this.props.location.state.details );
-          
         var aformData = new FormData();
         aformData.append("categoryName",this.state.categoryName)
         aformData.append("categoryDescription",this.categoryDescription)
         axios.patch('http://localhost:4000/admin/category/'+this.props.location.state.details._id,{categoryName:this.state.categoryName,  categoryDescription:this.state.categoryDescription}
         ).then(response => {
-            console.log(response);
-            console.log(response.data);
             this.props.history.push('/admin/category/')
           }).catch(error => {
             console.log(error);
@@ -41,13 +36,8 @@ class AdminCateUpdate extends Component
       }
    
    
-        render()
-        {  
-            console.log(this.state);
-            
-            return (
-      
-      
+  render(){  
+    return (
            <div>
                <Form>
         <Form.Group controlId="formBasicEmail">

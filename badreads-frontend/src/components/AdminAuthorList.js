@@ -8,11 +8,16 @@ import './AdminAuthorList.css'
 import AdminAuthor from './AdminAuthor'
 import AdminAuthorCreate from './AdminAuthorCreate'
 import { Redirect} from "react-router-dom";
+import { getUser } from '../utils/common';
 
 class AdminAuthorList extends Component{
-  state={
-    authors:[
-    ]
+  constructor(props){
+    super(props)
+    var user = getUser();
+    this.state={
+      authors:[
+      ]
+    }
   }
 componentDidMount(){
     this.updateView()
@@ -36,6 +41,12 @@ Submit = (author) => {
 
 catepath=()=>{
   this.props.history.push('/admin/category/')
+}
+authorspath=()=>{
+  this.props.history.push('/admin/author/')
+}
+bookpath=()=>{
+  this.props.history.push('/admin/book/')
 }
 
   handledeleteauthor=(index)=>{
@@ -66,12 +77,12 @@ catepath=()=>{
       <br/>
   <ButtonGroup size="lg" className="mb-2">
     <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
-    <Button variant="light" className="btns">Books</Button>
+    <Button variant="light" className="btns"onClick={this.bookpath}>Books</Button>
     <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>+
+  <Button  className ="add"  onClick={this.onSubmit}>Add
  </Button>
 </>
   

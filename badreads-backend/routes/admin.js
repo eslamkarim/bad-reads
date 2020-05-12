@@ -32,11 +32,15 @@ router.get('/author',async(req,res)=>{
 
    try{
      const authors = await authModel.find({})
+     console.log(authors);
+     
      return res.json(authors)
         
     }
         catch (err)
         {
+            console.log(err);
+            
          res.send(err);
         }
  })
@@ -113,16 +117,14 @@ router.get('/book',async(req,res)=>{
      
  
  
- router.post('/book',async(req,res,next)=>{
-    const {bookName,bookDescription,rating} = req.body;
+ router.post('/book',upload.single('img'),async(req,res,next)=>{
+    const {bookName,author,category} = req.body;
+    const url = req.protocol + '://' + req.get('host') + '/books/' + req.file.originalname 
     const bookInstance = new bookModel({
-        bookName,
-        bookDescription,
-        rating,
-        
- 
- 
- 
+        bookName:bookName,
+        author:author,
+        category:category,
+        img:url
     })
  
    try{
@@ -131,6 +133,7 @@ router.get('/book',async(req,res)=>{
  }
  catch(err)
  {
+     console.log(err);
     res.send(err);
  }
  

@@ -8,14 +8,6 @@ import './Profile.css'
 import './author.css'
 import DataTableErrorBook from './data-table-error-book'
 
-const user = getUser();
-console.log(user);
-if (user) {
-    let userId = user.userId
-}
-
-
-
 export default class Home extends Component {
 
     constructor(props) {
@@ -33,88 +25,73 @@ export default class Home extends Component {
                 const userBooks = res.data.map((val) => {
                     return val.bookId
                 })
-
                 this.setState({
                     usersBooks: userBooks,
                 });
-
-
             })
             .catch(function (error) {
                 console.log(error);
             })
-
     }
 
 
     all = () => {
         var header = document.querySelector('#lefa')
         header.innerHTML = "All your Books"
-        let userId = user.userId
+        let userId = getUser().userId
         axios.get(`http://localhost:4000/userbook/${userId}`)
             .then(res => {
                 const userBooks = res.data.map((val) => {
                     return val.bookId
                 })
-
                 this.setState({
                     usersBooks: userBooks,
                 });
-
-
             })
             .catch(function (error) {
                 console.log(error);
             })
-
     }
     readAction = (e, value) => {
         switch (value) {
             case "current":
-
                 var header = document.querySelector('#lefa')
                 header.innerHTML = "Your Currently Reading Books"
                 break;
+            
             case "wtr":
-
                 var header = document.querySelector('#lefa')
                 header.innerHTML = "Books you Wnat to Read"
                 break;
 
             case "read":
-
                 var header = document.querySelector('#lefa')
                 header.innerHTML = "Your Already Read Books"
                 break;
+
             default:
                 var header = document.querySelector('#lefa')
                 header.innerHTML = "All your Books"
                 break;
         }
-        let userId = user.userId
+        let userId = getUser().userId
         axios.get(`http://localhost:4000/userbook/${value}/${userId}`)
             .then(res => {
                 const userBooks = res.data.map((val) => {
                     return val.bookId
                 })
-
                 this.setState({
                     usersBooks: userBooks,
                 });
-
             })
             .catch(function (error) {
                 console.log(error);
             })
-
     }
-
 
     homeBookTable() {
         if (this.state.usersBooks.length == 0) {
-
             return (
-
                     < DataTableErrorBook />
             )
       }

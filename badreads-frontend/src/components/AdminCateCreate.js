@@ -25,8 +25,6 @@ handleCate = () => {
   aformData.append("categoryDescription",this.state.categoryDescription)
   axios.post('http://localhost:4000/admin/category', {categoryName:this.state.categoryName,  categoryDescription:this.state.categoryDescription}
   ).then(response => {
-      console.log(response);
-      console.log(response.data);
       this.props.history.push('/admin/category/')
     }).catch(error => {
       console.log(error);

@@ -1,10 +1,5 @@
-// return the user data from the session storage
-export const getUser = () => {
-  const userStr = sessionStorage.getItem('user');
-  if (userStr) return JSON.parse(userStr);
-  else return null;
-}
- 
+import axios from 'axios';
+import React,{Redirect} from 'react';
 // return the token from the session storage
 export const getToken = () => {
   return sessionStorage.getItem('token') || null;
@@ -20,4 +15,24 @@ export const removeUserSession = () => {
 export const setUserSession = (token, user) => {
   sessionStorage.setItem('token', token);
   sessionStorage.setItem('user', JSON.stringify(user));
+}
+const verifyUser = () =>{
+  var token = getToken();   
+    if(token){
+      var token = getToken(); 
+    axios.get(`http://localhost:4000/login/verifyToken?token=${token}`)
+    .then(response => {
+      }).catch(error => {
+        removeUserSession();
+        window.location.assign("/");
+      });
+    }
+}
+export const getUser = () => {
+  verifyUser();
+  const userStr = sessionStorage.getItem('user');
+  if (userStr){
+      return JSON.parse(sessionStorage.getItem('user'))
+  } 
+  else return null;
 }

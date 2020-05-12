@@ -4,10 +4,6 @@ import { Link } from 'react-router-dom';
 import './author.css'
 import { getUser } from '../utils/common.js'
 
-const user = getUser()
-
-
-
 class HomeBookTable extends Component {
 
     constructor(props) {
@@ -18,9 +14,9 @@ class HomeBookTable extends Component {
             };
         }
     componentDidMount() {
-        if(user)
+        if(getUser())
         {   
-            let userId = user.userId
+            let userId = getUser().userId
             let bookId = this.state.books._id
             axios.get(`http://localhost:4000/userbook/${userId}/${bookId}`)
             .then(res => {
@@ -42,7 +38,7 @@ class HomeBookTable extends Component {
         else
             var action = "Read"
 
-        let userId = user.userId
+        let userId = getUser().userId
         let bookId = this.state.books._id
         
         axios.post(`http://127.0.0.1:4000/userBook/`, {
@@ -74,7 +70,7 @@ class HomeBookTable extends Component {
         else
             var action = "Read"
 
-        let userId = user.userId
+        let userId = getUser().userId
         let bookId = this.state.books._id
         
         axios.put(`http://127.0.0.1:4000/userBook/${userId}/${bookId}`, {
@@ -131,7 +127,7 @@ class HomeBookTable extends Component {
     
     render() {
         let bUrl = `http://localhost:3000/book/${this.state.books._id}`
-        if (!user) 
+        if (!getUser()) 
         {
             return (
                 <div  key={this.props.id}>

@@ -28,6 +28,12 @@ class NavBar extends Component {
         });
     }
     MavList;
+    AdminList(user){        
+        if(user.user.isAdmin){
+            return <li><a href="/admin/author">Admin Panel</a></li>
+        }
+        return null;
+    }
     changeNav = (props) =>{
         if(props.loggedIn){
             const user = getUser();
@@ -57,6 +63,7 @@ class NavBar extends Component {
                         </Link>
                         <ul className="drop">
                             <div className="menu-arrow"></div>
+                            <this.AdminList user={user}/>
                             <li><a href="/logout">Sign Out</a></li>
                         </ul>
                     </li>
@@ -77,7 +84,6 @@ class NavBar extends Component {
         }
     }
     render(){
-        console.log(this.props);
         return(
              <Navbar>
                 <div className="logo">
