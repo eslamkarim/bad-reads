@@ -28,8 +28,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        let userId = user.userId
-        axios.get(`http://localhost:4000/userbook/${userId}`)
+        axios.get(`http://localhost:4000/userbook/${user.userId}`)
             .then(res => {
                 const userBooks = res.data.map((val) => {
                     return val.bookId
@@ -147,7 +146,7 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div>
-                    <div className="i-am-centered" style={{ marginRight: "250px" }}>
+                    <div className="i-am-centered" >
                         <div className="row boy" >
 
                             {
