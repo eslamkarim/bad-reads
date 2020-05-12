@@ -12,7 +12,8 @@ import Book_Page from './components/Book_Page'
 import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
-import { getUser } from './utils/common';
+import { getUser, getToken, removeUserSession, setUserSession } from './utils/common';
+import PublicRoute from './utils/PublicRoute';
 import UsersId from './components/authorsId'
 import Category from './components/category'
 import Home from './components/home'
@@ -34,7 +35,7 @@ import AdminBookCreate from './components/AdminBookCreate';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {};  
+    this.state = {}; 
   }
 
   componentWillMount(){
@@ -68,7 +69,8 @@ class App extends Component {
                     <Route exact path='/category' component={Category}/>
 
                     {/* <Route exact path='/categories' component={Categories}/> */}
-                    <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/>
+                    <PublicRoute path="/login" component={Login} checkUser={this.checkUser.bind(this)} />
+                    {/* <Route exact path='/login' render={(props) => <Login {...props} checkUser={this.checkUser.bind(this)} />}/> */}
                     <Route exact path='/admin/login' render={(props) => <AdminLogin {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/register' render={(props) => <Register {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>

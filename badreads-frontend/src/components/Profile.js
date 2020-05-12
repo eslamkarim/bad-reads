@@ -8,14 +8,6 @@ import './Profile.css'
 import './author.css'
 import DataTableErrorBook from './data-table-error-book'
 
-const user = getUser();
-console.log(user);
-if (user) {
-    let userId = user.userId
-}
-
-
-
 export default class Home extends Component {
 
   constructor(props) {
@@ -23,12 +15,11 @@ export default class Home extends Component {
       this.state = {
           usersBooks: [],
           pageHeader: "All your Books"
-
       };
   }
 
   componentDidMount() {      
-      let userId = user.userId
+      let userId = getUser().userId
       axios.get(`http://localhost:4000/userbook/${userId}`)
           .then(res => {
             const userBooks = res.data.map((val)=>{
@@ -51,7 +42,7 @@ export default class Home extends Component {
     all = () => {
         var header = document.querySelector('#lefa')
         header.innerHTML = "All your Books"
-        let userId = user.userId
+        let userId = getUser().userId
         axios.get(`http://localhost:4000/userbook/${userId}`)
             .then(res => {
                 const userBooks = res.data.map((val)=>{
@@ -92,7 +83,7 @@ export default class Home extends Component {
                 header.innerHTML = "All your Books"
                 break;
         }
-        let userId = user.userId
+        let userId = getUser().userId
         axios.get(`http://localhost:4000/userbook/${value}/${userId}`)
             .then(res => {
                 const userBooks = res.data.map((val)=>{

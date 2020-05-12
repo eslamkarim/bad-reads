@@ -1,15 +1,22 @@
-import React ,{Component} from 'react';
+import React, {Component, Redirect} from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { getUser } from '../utils/common';
 
 class AdminAuthorUpdate extends Component
 {  
     constructor(props){
         
         super(props);
+        if(!this.props.isLoggedIn) {
+          this.props.history.push('/login')
+        }
+        else if(!getUser().isAdmin){
+          this.props.history.push('/home')
+        }
         this.state={
         authorName:this.props.location.state.details.authorName,
         authorInfo:this.props.location.state.details.authorInfo,

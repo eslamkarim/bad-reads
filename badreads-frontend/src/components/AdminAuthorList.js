@@ -8,11 +8,16 @@ import './AdminAuthorList.css'
 import AdminAuthor from './AdminAuthor'
 import AdminAuthorCreate from './AdminAuthorCreate'
 import { Redirect} from "react-router-dom";
+import { getUser } from '../utils/common';
 
 class AdminAuthorList extends Component{
-  state={
-    authors:[
-    ]
+  constructor(props){
+    super(props)
+    var user = getUser();
+    this.state={
+      authors:[
+      ]
+    }
   }
 componentDidMount(){
     this.updateView()

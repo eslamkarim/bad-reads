@@ -31,6 +31,7 @@ class NavBar extends Component {
     changeNav = (props) =>{
         if(props.loggedIn){
             const user = getUser();
+            console.log(user);
             this.MavList = (
                 <Fragment>
                     <li>
