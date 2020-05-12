@@ -10,6 +10,7 @@ class AdminAuthorUpdate extends Component
     constructor(props){
         
         super(props);
+        
         this.state={
         authorName:this.props.location.state.details.authorName,
         authorInfo:this.props.location.state.details.authorInfo,

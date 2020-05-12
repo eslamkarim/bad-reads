@@ -8,8 +8,10 @@ import './AdminAuthorList.css'
 import AdminAuthor from './AdminAuthor'
 import AdminAuthorCreate from './AdminAuthorCreate'
 import { Redirect} from "react-router-dom";
+import './AdminAuthor.css'
 
 class AdminAuthorList extends Component{
+ 
   state={
     authors:[
     ]
@@ -77,7 +79,7 @@ bookpath=()=>{
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>+
+  <Button  className ="add"  onClick={this.onSubmit}>Add
  </Button>
 </>
   

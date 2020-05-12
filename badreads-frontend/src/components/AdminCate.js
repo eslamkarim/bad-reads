@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import {ButtonGroup} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 import AdminCateList from './AdminCateList'
+import './AdminAuthor.css'
+
 
 class AdminCate extends Component{
     state={
@@ -76,7 +78,7 @@ class AdminCate extends Component{
     
     
     </ButtonGroup>
-    <Button onClick={this.onSubmit}>+
+    <Button  className="add" onClick={this.onSubmit}>Add
    </Button>
   </>
     
