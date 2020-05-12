@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 class AdminAuthorCreate extends Component{
   constructor(props){
     super(props);
+    
     this.state={
     authorName:'',
     date_of_birth:new Date(),

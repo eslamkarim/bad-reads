@@ -10,6 +10,7 @@ class AdminBookUpdate extends Component
     constructor(props){
         
         super(props);
+        
         this.state={
             bookId:this.props.location.state.details.bookId,
             bookName:this.props.location.state.details.bookName,

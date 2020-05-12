@@ -19,8 +19,8 @@ class AdminBookList extends Component{
 
       <td>{this.props.details.img}</td>
         
-      <td><button onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
-      <button onClick={()=>{this.props.handledeletebook(this.props.index)}} >Delete</button>
+      <td><button  class ="update"onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
+      <button  class ="delete"onClick={()=>{this.props.handledeletebook(this.props.index)}} >Delete</button>
       
       </td>
      

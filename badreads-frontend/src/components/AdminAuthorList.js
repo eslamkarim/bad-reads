@@ -82,7 +82,7 @@ bookpath=()=>{
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>+
+  <Button  className ="add"  onClick={this.onSubmit}>Add
  </Button>
 </>
   

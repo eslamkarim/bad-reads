@@ -5,8 +5,12 @@ import {ButtonGroup} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 import AdminBookList from './AdminBookList'
 import AdminAuthorCreate from './AdminAuthorCreate'
+import './AdminAuthor.css'
+
 
 class AdminBook extends Component{
+ 
+ 
   state={
     books:[
     ],
@@ -89,7 +93,7 @@ authorspath=()=>{
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>+
+  <Button className="add" onClick={this.onSubmit}>Add
  </Button>
 </>
   

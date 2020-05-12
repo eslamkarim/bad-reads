@@ -76,7 +76,7 @@ class App extends Component {
                     <Route exact path='/logout' render={(props) => <Logout {...props} checkUser={this.checkUser.bind(this)} />}/>
                     <Route exact path='/' component={Home}/>
                     { getUser() && <Route exact path='/home' component={Home}/>}
-
+                   
                      <Route exact path='/admin/author' component={AdminAuthorList}/>
                      <Route exact path='/admin/author/create' component={AdminAuthorCreate}/>
                      <Route exact path='/admin/author/update/' component={AdminAuthorUpdate}/>
@@ -88,7 +88,7 @@ class App extends Component {
                      <Route exact path='/admin/book' component={AdminBook}/>
                      <Route exact path='/admin/book/create' component={AdminBookCreate}/>
                      <Route exact path='/admin/book/update' component={AdminBookUpdate}/>
-
+                     
 
 
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
