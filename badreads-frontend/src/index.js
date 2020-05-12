@@ -9,6 +9,7 @@ import Logout from './components/logout';
 import Profile from './components/Profile'
 import Author from './components/author'
 import Book_Page from './components/Book_Page'
+import Category_books from './components/Category_books'
 import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
@@ -79,7 +80,7 @@ class App extends Component {
                      <Route exact path='/admin/category/create' component={AdminCateCreate}/>
                      <Route exact path='/admin/category/update' component={AdminCateUpdate}/>
 
-
+                    <Route exact path='/category/:id' render={(props) => <Category_books {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />

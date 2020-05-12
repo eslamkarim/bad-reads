@@ -7,6 +7,8 @@ class DataTable extends Component {
     
     render() {
         // let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
+        console.log(this.props.obj);
+        
         return (
             <div className="col-md-3 col-sm-6 item">
                 <div className="card item-card-cat card-block">

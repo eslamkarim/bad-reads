@@ -30,7 +30,9 @@ export default class Book_Page extends Component {
         this.setState({  bookName, img, bookDescription, rating, authorName,  categoryName, Category_Link, Author_Link})
       }
     ).catch(err=>{
+      this.props.history.push(`/404`)
       console.log(err);
+
 
     })
 
@@ -49,7 +51,9 @@ export default class Book_Page extends Component {
       // get user state for this book
       axios.get(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`)
       .then(res=>{
-        this.setState({state: res.data.action})
+        this.setState({state: res.data})
+        console.log("STATE : ",res.data);
+        
       }).catch(err=>{
         console.log(err);
       })
@@ -59,8 +63,6 @@ export default class Book_Page extends Component {
     axios.get(`http://127.0.0.1:4000/review/${this.props.match.params.id}`)
     .then(res=>{
       this.setState({reviewsList: res.data})
-      console.log(this.state.reviewsList);
-
     }).catch(err=>{
       console.log(err);
     })
@@ -129,10 +131,25 @@ export default class Book_Page extends Component {
      
   }
 
+  deleteReview = reviewId => e => {
+    if (getUser()){
+      console.log(reviewId);
+      
+      axios.delete(`http://127.0.0.1:4000/review/${getUser().userId}/${this.props.match.params.id}/${reviewId}`)
+      .then(res=>{
+        this.get_book_data()
+      }).catch(err=>{
+        console.log(err);
+      })
+    }else{
+      this.props.history.push(`/login`)
+    }
+  }
+
   changeState = async(event) => {
     if (getUser()){
       this.setState({state: event.target.value})
-      axios.post(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: this.state.state})
+      axios.put(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: event.target.value})
       .then(res=>{
         console.log(res);
       }).catch(err=>{
@@ -164,7 +181,10 @@ export default class Book_Page extends Component {
   render() {
     const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
     console.log(this.props.match.params.id);
-    const myID = getUser().userId
+    let myID = null
+    if (getUser()){
+      myID = getUser().userId
+    }
     return (
       <div className="container" id="book">
         <div className="row">
@@ -241,9 +261,8 @@ export default class Book_Page extends Component {
               <div className="media-body" style={{alignSelf: "center"}}>
                 <p>{reviewer.review}</p>
               </div>
-              <p>{myID}</p>
-              <p>{reviewer.user._id}</p>
-              {  myID == reviewer.user._id ? <button type="button" class="btn btn-danger">{reviewer.user._id}</button> :null}
+              {  myID == reviewer.user._id ? <button type="button" class="btn btn-info" style={{marginRight: '20px'}}>Edit</button> : null}
+              {  myID == reviewer.user._id ? <button type="button" class="btn btn-danger" onClick={this.deleteReview(reviewer._id)}>delete</button> :null}
             </div>
             )
           }
