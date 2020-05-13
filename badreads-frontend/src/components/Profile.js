@@ -20,7 +20,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:4000/userbook/${user.userId}`)
+        axios.get(`http://localhost:4000/userbook/${getUser().userId}`)
             .then(res => {
                 const userBooks = res.data.map((val) => {
                     return val.bookId

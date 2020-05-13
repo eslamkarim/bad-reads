@@ -17,8 +17,8 @@ class AdminCateList extends Component{
       
        
         
-      <td><button class="update" onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
-      <button  class ="delete"onClick={()=>{this.props.handledeletecate(this.props.index)}} >Delete</button>
+      <td><button className="update" onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
+      <button  className ="delete"onClick={()=>{this.props.handledeletecate(this.props.index)}} >Delete</button>
       
       </td>
      

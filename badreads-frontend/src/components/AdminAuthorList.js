@@ -32,11 +32,12 @@ updateView = () =>{
 }
 onSubmit = () => {
   this.props.history.push('/admin/author/create')
-  
 }
 
 Submit = (author) => {
   this.props.history.push(  { pathname: '/admin/author/update', state : { details: author } })
+
+  // this.props.history.push({ pathname: '/admin/author/update', state : { details: author }})
 }
 
 catepath=()=>{
@@ -67,7 +68,7 @@ bookpath=()=>{
    {
      const authors=this.state.authors;
      const authorlist =authors.map((author,index)=>{
-       return <AdminAuthor details={author} key={index} index={index} update={this.handleChange}  handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
+       return <AdminAuthor details={author} key={index} index={index} handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
       })
            
     return (  

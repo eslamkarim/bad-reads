@@ -7,7 +7,7 @@ function AdminRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => getUser().isAdmin ? <Component {...props} {...rest}  /> : <Redirect to={{ pathname: '/' }} />}
+      render={(props) => getUser().isAdmin ? <Component {...props} {...rest} /> : <Redirect to={{ pathname: '/' }} />}
     />
   )
 }

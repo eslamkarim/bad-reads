@@ -77,7 +77,7 @@ authorspath=()=>{
    {
      const books=this.state.books;
      const booklist =books.map((book,index)=>{
-       return <AdminBookList details={book} key={index} index={index} update={this.handleChange}  handledeletebook={this.handledeletebook} Submit={this.Submit}/>
+       return <AdminBookList details={book} key={index} index={index} handledeletebook={this.handledeletebook} Submit={this.Submit}/>
       })
            
     return (  

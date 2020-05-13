@@ -5,6 +5,7 @@ var moment = require('moment');
 class AdminAuthor extends Component{
  render()
  {  
+ console.log(this.props);
  
   return(
     <Fragment>
@@ -18,8 +19,8 @@ class AdminAuthor extends Component{
       <td>{this.props.details.img}</td>
       <td>{moment(this.props.details.date_of_birth).format("DD-MM-YYYY")}</td>
         
-      <td><button  className ="update"onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
-      <button   className ="delete"onClick={()=>{this.props.handledeleteauthor(this.props.index)}} >Delete</button>
+      <td><button  className ="update" onClick={()=>{this.props.Submit(this.props.details)}} >Update</button> 
+      <button   className ="delete" onClick={()=>{this.props.handledeleteauthor(this.props.index)}} >Delete</button>
       
       </td>
      

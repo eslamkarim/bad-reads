@@ -16,7 +16,7 @@ class AdminAuthorUpdate extends Component
         }
         else if(!getUser().isAdmin){
           this.props.history.push('/home')
-        }
+        }        
         this.state={
         authorName:this.props.location.state.details.authorName,
         authorInfo:this.props.location.state.details.authorInfo,
