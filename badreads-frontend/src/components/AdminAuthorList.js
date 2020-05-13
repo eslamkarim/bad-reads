@@ -36,8 +36,6 @@ onSubmit = () => {
 
 Submit = (author) => {
   this.props.history.push(  { pathname: '/admin/author/update', state : { details: author } })
-
-  // this.props.history.push({ pathname: '/admin/author/update', state : { details: author }})
 }
 
 catepath=()=>{
