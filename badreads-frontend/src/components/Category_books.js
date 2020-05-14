@@ -17,6 +17,9 @@ export default class Category_books extends Component {
     // get category name  
     axios.get(`http://127.0.0.1:4000/category/${this.props.match.params.id}/name`)
       .then(res=>{
+        if (!res.data.categoryName){
+          this.props.history.push(`/404`)
+        }
         this.setState({
           categoryName: res.data.categoryName
         })
