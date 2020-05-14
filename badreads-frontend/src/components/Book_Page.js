@@ -5,7 +5,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 import axios from 'axios';
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getUser } from '../utils/common';
 export default class Book_Page extends Component {
@@ -16,7 +16,6 @@ export default class Book_Page extends Component {
 
 
   get_book_data = ()=>{
-    
     // get book data
     axios.get(`http://127.0.0.1:4000/book/${this.props.match.params.id}`).then(
       res => {
@@ -103,7 +102,9 @@ export default class Book_Page extends Component {
     state: "Read",
     MyRating: -1,
     reviewsList: [],
-    review: ""
+    review: "",
+    reviewEditNum: -1,
+    reviewEditing: "",
   }
 
   mouseEnterRate = rate => e => {
@@ -123,12 +124,10 @@ export default class Book_Page extends Component {
 
   clearRating = () => {
     this.clear_rating_book()
-     
   }
 
   deleteReview = reviewId => e => {
     if (getUser()){
-      
       axios.delete(`http://127.0.0.1:4000/review/${getUser().userId}/${this.props.match.params.id}/${reviewId}`)
       .then(res=>{
         this.get_book_data()
@@ -147,7 +146,6 @@ export default class Book_Page extends Component {
       .then(res=>{
       }).catch(err=>{
         console.log(err);
-        
       })
     }else{
       this.props.history.push(`/login`)
@@ -166,13 +164,31 @@ export default class Book_Page extends Component {
     }else{
       this.props.history.push(`/login`)
     }
-    
   }
 
-  
+  editReview = id => e => {
+    this.setState({
+      reviewEditNum: id,
+      reviewEditing: "",
+    })
+  }
+
+  submitEditReview = id => e => {
+    if (this.state.reviewEditing.length == 0 ){
+      this.setState({reviewEditing: "",reviewEditNum: -1});
+      return
+    }
+    axios.put(`http://127.0.0.1:4000/review/${id}`,{review: this.state.reviewEditing})
+      .then(res=>{
+        this.setState({reviewEditing: "",reviewEditNum: -1});
+        this.get_book_data()        
+      }).catch(err=>{
+        console.log(err);
+      })
+  }
+
   render() {
-    const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
-    
+    const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, reviewEditNum , MyRating, TempRating, reviewsList } = this.state    
     let myID = null
     if (getUser()){
       myID = getUser().userId
@@ -228,10 +244,8 @@ export default class Book_Page extends Component {
               <span ><FontAwesomeIcon icon={faStar} color={rating >= 4 ? "#FF9529": ""}/></span>
               <span ><FontAwesomeIcon icon={faStar} color={rating >= 5 ? "#FF9529": ""}/></span>
             </span>
-
             <p>
-            A fascinating exploration of how insights from computer algorithms can be applied to our everyday lives, helping to solve common decision-making problems and illuminate the workings of the human mind
-
+              A fascinating exploration of how insights from computer algorithms can be applied to our everyday lives, helping to solve common decision-making problems and illuminate the workings of the human mind
             </p>
           </div>
         </div>
@@ -245,7 +259,20 @@ export default class Book_Page extends Component {
         <div className=" border-info rounded" >
           {
             reviewsList.map((reviewer)=>
-              <div className="media border"  style={{padding: "5px 10px",backgroundColor:"white",borderRadius: "15px"}}>
+
+              reviewer._id == reviewEditNum ? 
+              (<div className="media border"  style={{padding: "5px 10px",backgroundColor:"white",borderRadius: "15px"}}>
+                  <div style={{textAlign: "center"}} className="mr-3" >
+                    <img src={reviewer.user.img}  alt="..." width="100px" height="100px" style={{borderRadius:"50%"}} />
+                    <h4>{reviewer.user.firstName}</h4>
+                  </div>
+                <div className="media-body" style={{alignSelf: "center"}}>
+                  <textarea  className="form-control " id="validationTextarea" placeholder="Write your review" rows="4" required onChange={(e)=>this.setState({reviewEditing: e.target.value})} >{reviewer.review}</textarea>
+                </div>
+                {  myID == reviewer.user._id ? <button type="button" className="btn btn-info" style={{marginLeft: '10px',marginRight: '10px'}} onClick={this.submitEditReview(reviewer._id)}>submit</button> : null}
+              </div>)
+              :
+              (<div className="media border"  style={{padding: "5px 10px",backgroundColor:"white",borderRadius: "15px"}}>
                 <div style={{textAlign: "center"}} className="mr-3" >
                   <img src={reviewer.user.img}  alt="..." width="100px" height="100px" style={{borderRadius:"50%"}} />
                   <h4>{reviewer.user.firstName}</h4>
@@ -253,9 +280,9 @@ export default class Book_Page extends Component {
               <div className="media-body" style={{alignSelf: "center"}}>
                 <p>{reviewer.review}</p>
               </div>
-              {  myID == reviewer.user._id ? <button type="button" class="btn btn-info" style={{marginRight: '20px'}}>Edit</button> : null}
-              {  myID == reviewer.user._id ? <button type="button" class="btn btn-danger" onClick={this.deleteReview(reviewer._id)}>delete</button> :null}
-            </div>
+              {  myID == reviewer.user._id ? <button type="button" className="btn btn-info" style={{marginRight: '20px'}} onClick={this.editReview(reviewer._id)}>Edit</button> : null}
+              {  myID == reviewer.user._id ? <button type="button" className="btn btn-danger" onClick={this.deleteReview(reviewer._id)}>delete</button> :null}
+            </div>)
             )
           }
         </div>

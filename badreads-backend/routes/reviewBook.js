@@ -24,6 +24,15 @@ router.post('/:userId/:bookId', async(req,res)=>{
   }
 })
 
+router.put('/:id',async(req,res)=>{
+  try{
+    const review = await reviewBookModel.update({_id: req.params.id},{review: req.body.review})
+    return res.json(review)
+  }catch(err){
+    res.send(err)
+  }
+})
+
 router.delete('/:userId/:bookId/:reviewId', async(req,res)=>{
   try{
     const review = await reviewBookModel.findByIdAndDelete(req.params.reviewId)
