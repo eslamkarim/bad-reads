@@ -1,8 +1,7 @@
-import React ,{Component} from 'react';
+import React ,{Component, Fragment} from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 class AdminBookUpdate extends Component
@@ -12,11 +11,11 @@ class AdminBookUpdate extends Component
         super(props);
         
         this.state={
-            bookId:this.props.location.state.details.bookId,
+            bookId:this.props.location.state.details._id,
             bookName:this.props.location.state.details.bookName,
-            category:this.props.location.state.details.category,
-            author:this.props.location.state.details.author,
-        img:null
+            category:this.props.location.state.details.category._id,
+            author:this.props.location.state.details.author._id,
+            img:null
         }
      }
 
@@ -30,21 +29,51 @@ class AdminBookUpdate extends Component
       handlebookNameChange = (e) => {
         this.setState({bookName: e.target.value});
       }
-      handlecategoryChange = (e) => {
-        this.setState({category: e.target.value});
-      }
-      handleauthorChange = (e) => {
-        this.setState({author: e.target.value});
-      }
+      
+createSelectItems = () => { 
+  let items = []; 
+  items.push(
+   <Fragment>
+     <option key="nullauthor" value={null} disabled selected>Please Select an author</option>
+   </Fragment>); 
+ for (var i = 0; i < this.props.location.state.authors.length; i++){ 
+ items.push(
+ <Fragment>
+   <option kaey={this.props.location.state.authors[i]._id} value={this.props.location.state.authors[i]._id}>{this.props.location.state.authors[i].authorName}</option>
+ </Fragment>); 
+}
+return items; 
+}
+
+createCategoriesSelectItems = () => { 
+ let items = []; 
+ items.push(
+   <Fragment>
+     <option key="null" value={null} disabled selected>Please Select a category</option>
+   </Fragment>); 
+for (var i = 0; i < this.props.location.state.categories.length; i++){ 
+items.push(
+<Fragment>
+  <option key={this.props.location.state.categories[i]._id} value={this.props.location.state.categories[i]._id}>{this.props.location.state.categories[i].categoryName}</option>
+</Fragment>); 
+}
+return items; 
+}
+
+onDropdownSelected = (e)=> { 
+ this.setState({author: e.target.value});
+} 
+onCategoriesDropdownSelected = (e)=> { 
+ this.setState({category: e.target.value});
+} 
       
       handleBook = () => {          
         var aformData = new FormData();
-        aformData.append("bookId",this.state.bookId)
         aformData.append("bookName",this.state.bookName)
         aformData.append("category",this.state.category)
-        aformData.append("author",this.state.author)
+        aformData.append("author",this.state.author)        
         if(this.state.img) aformData.append("img",this.state.img)
-        axios.patch('http://localhost:4000/admin/book/'+this.props.location.state.details.bookId, aformData,{
+        axios.patch('http://localhost:4000/admin/book/'+this.props.location.state.details._id, aformData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -63,11 +92,14 @@ class AdminBookUpdate extends Component
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Book Name</Form.Label>
               <Form.Control type="text" name="bookName" value={this.state.bookName} onChange={this.handlebookNameChange}/>
-              <Form.Label>Category</Form.Label>
-              <Form.Control type="text" name="category" value={this.state.category} onChange={this.handlecategoryChange}/>
               <Form.Label>Author</Form.Label>
-              <Form.Control type="text" name="category" value={this.state.category} onChange={this.handleauthorChange}/>
-
+              <select id="authors" onChange={this.onDropdownSelected}>
+                <this.createSelectItems />
+              </select><br/>
+              <Form.Label>Category</Form.Label>
+              <select id="categories" onChange={this.onCategoriesDropdownSelected}>
+                <this.createCategoriesSelectItems />
+              </select><br/>
               <Form.Label>Book Photo</Form.Label>
               <div className="form-group">
                 <input type="file" name="img" onChange={this.handleImageChange}/>

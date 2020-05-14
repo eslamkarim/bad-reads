@@ -94,7 +94,6 @@ export default class Home extends Component {
         }
         else {
             return this.state.bookCollection.map((data, i) => {
-            data.key = Math.floor(Math.random() * 100000)
                 return (
                     <div className="col-md-3 col-sm-6 item" key={data.key}>
                         <HomeBookTable id={data.key} obj={data} />

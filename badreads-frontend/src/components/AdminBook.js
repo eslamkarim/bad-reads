@@ -23,7 +23,7 @@ componentDidMount(){
 
 updateView = () =>{
   axios.get("http://localhost:4000/admin/book")
-     .then(res=>{
+     .then(res=>{       
        const data = res.data;
        this.setState({books:data})
      })
@@ -45,8 +45,20 @@ onSubmit = async() => {
   
 }
 
-Submit = (book) => {
-  this.props.history.push(  { pathname: '/admin/book/update', state : { details: book } })
+Submit = async(book) => {
+  await axios.get("http://localhost:4000/admin/author")
+  .then(response => {
+      var authors=response.data
+      axios.get("http://localhost:4000/admin/category")
+      .then(response => {
+          var categories=response.data
+          this.props.history.push({pathname: '/admin/book/update', state : { authors: authors, categories: categories, details: book }})
+        }).catch(error => {
+        console.log(error);
+      });
+    }).catch(error => {
+    console.log(error);
+  });
 }
 
 catepath=()=>{

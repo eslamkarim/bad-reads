@@ -126,6 +126,8 @@ class HomeBookTable extends Component {
     }
     
     render() {
+        console.log(this.state.books);
+        
         let bUrl = `http://localhost:3000/book/${this.state.books._id}`
         if (!getUser()) 
         {

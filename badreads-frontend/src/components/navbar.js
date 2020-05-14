@@ -2,7 +2,9 @@ import React, {Fragment, Component} from 'react';
 import './nav.css';
 import Navbar from 'react-bootstrap/Navbar';
 import { getUser } from '../utils/common';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import SelectSearch from 'react-select-search';
 
  
 
@@ -11,15 +13,33 @@ class NavBar extends Component {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.state = {
-          isOpen: false
+          isOpen: false,
+          books: null
         };
-        this.changeNav(props);
-    }
-
-    componentWillMount(){
+        this.changeNav(props);                
     }
     componentWillReceiveProps(nextprop){
         this.changeNav(nextprop); 
+    }
+    
+    componentDidMount(){
+        axios.get(`http://localhost:4000/book`)
+            .then(res => {
+                this.setState({
+                    books: res.data.map(book=>(
+                        {name:book.bookName, value:book._id}
+                    ))
+                })
+                this.changeNav(this.props)
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+    handleSelect = (elem) => {
+        console.log(elem);  
+        window.location.href = '/book/'+elem     
     }
 
     toggle() {
@@ -67,10 +87,7 @@ class NavBar extends Component {
                             <li><a href="/logout">Sign Out</a></li>
                         </ul>
                     </li>
-                    <div className="search-bar">
-                    <input type="text"  placeholder="Search Books" />
-                    <button type="button" name="button" id="search"></button>
-                    </div>
+                    
                 </Fragment>
             );
         }else{
@@ -83,7 +100,10 @@ class NavBar extends Component {
             );
         }
     }
-    render(){
+    render(){        
+        if(this.state.books == null){
+            return null;
+        }
         return(
              <Navbar>
                 <div className="logo">
@@ -98,6 +118,11 @@ class NavBar extends Component {
 
                 <ul className="main-nav">
                     { this.MavList }
+                    <li>
+                        <ul>
+                        <SelectSearch onChange={this.handleSelect} options={this.state.books} placeholder="Search Books" search={true} autoComplete="on" />
+                        </ul>
+                    </li>
                 </ul>
                 <button type="button" name="button" className="hamburger">&#9776;</button>
 

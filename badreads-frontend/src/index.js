@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar';
@@ -12,7 +12,7 @@ import Book_Page from './components/Book_Page'
 import Book from './components/Book'
 import PageNotFound from './components/404/PageNotFound'
 import Users from './components/authors'
-import { getUser, getToken, removeUserSession, setUserSession } from './utils/common';
+import { getUser } from './utils/common';
 import PublicRoute from './utils/PublicRoute';
 import PrivateRoute from './utils/PrivateRoute';
 import AdminRoute from './utils/AdminRoute';
@@ -44,7 +44,7 @@ class App extends Component {
       this.checkUser();
   }
 
-  checkUser(){
+  checkUser(){    
     if(sessionStorage.getItem('token') != null && sessionStorage.getItem('user') != null){
       this.setState({loggedIn: true}); 
     }else{
