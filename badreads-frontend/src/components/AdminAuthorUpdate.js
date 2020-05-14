@@ -1,9 +1,10 @@
-import React ,{Component} from 'react';
+import React, {Component, Redirect} from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import {Form} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { getUser } from '../utils/common';
 
 class AdminAuthorUpdate extends Component
 {  

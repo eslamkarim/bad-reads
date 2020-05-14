@@ -16,8 +16,6 @@ export default class Category extends Component {
         axios.get('http://localhost:4000/category')
             .then(res => {
                 this.setState({ usersCollection: res.data });
-                console.log(res.data);
-
             })
             .catch(function (error) {
                 console.log(error);

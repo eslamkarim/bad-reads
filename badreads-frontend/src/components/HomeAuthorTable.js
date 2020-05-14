@@ -9,9 +9,7 @@ class HomeAuthorTable extends Component {
         
     }
     render() {
-        let bUrl = `http://localhost:3000/author/${this.props.obj._id}`
-        console.log(this.props);
-        
+        let bUrl = `http://localhost:3000/author/${this.props.obj._id}`        
         return (
             <div key={this.props.id}>
                 <div className="card item-card card-block">

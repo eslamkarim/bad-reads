@@ -8,11 +8,16 @@ import './AdminAuthorList.css'
 import AdminAuthor from './AdminAuthor'
 import AdminAuthorCreate from './AdminAuthorCreate'
 import { Redirect} from "react-router-dom";
+import { getUser } from '../utils/common';
 
 class AdminAuthorList extends Component{
-  state={
-    authors:[
-    ]
+  constructor(props){
+    super(props)
+    var user = getUser();
+    this.state={
+      authors:[
+      ]
+    }
   }
 componentDidMount(){
     this.updateView()
@@ -27,7 +32,6 @@ updateView = () =>{
 }
 onSubmit = () => {
   this.props.history.push('/admin/author/create')
-  
 }
 
 Submit = (author) => {
@@ -36,6 +40,12 @@ Submit = (author) => {
 
 catepath=()=>{
   this.props.history.push('/admin/category/')
+}
+authorspath=()=>{
+  this.props.history.push('/admin/author/')
+}
+bookpath=()=>{
+  this.props.history.push('/admin/book/')
 }
 
   handledeleteauthor=(index)=>{
@@ -56,7 +66,7 @@ catepath=()=>{
    {
      const authors=this.state.authors;
      const authorlist =authors.map((author,index)=>{
-       return <AdminAuthor details={author} key={index} index={index} update={this.handleChange}  handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
+       return <AdminAuthor details={author} key={index} index={index} handledeleteauthor={this.handledeleteauthor} Submit={this.Submit}/>
       })
            
     return (  
@@ -66,12 +76,12 @@ catepath=()=>{
       <br/>
   <ButtonGroup size="lg" className="mb-2">
     <Button variant="light" className="btns"onClick={this.catepath}>Categories</Button>
-    <Button variant="light" className="btns">Books</Button>
+    <Button variant="light" className="btns"onClick={this.bookpath}>Books</Button>
     <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
   
   
   </ButtonGroup>
-  <Button onClick={this.onSubmit}>+
+  <Button  className ="add"  onClick={this.onSubmit}>Add
  </Button>
 </>
   

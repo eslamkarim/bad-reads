@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import {ButtonGroup} from 'react-bootstrap';
 import {Table} from 'react-bootstrap';
 import AdminCateList from './AdminCateList'
+import './AdminAuthor.css'
+
 
 class AdminCate extends Component{
     state={
@@ -36,13 +38,12 @@ class AdminCate extends Component{
   
   catepath=()=>{
     this.props.history.push('/admin/category/')
-
-
   }
   authorspath=()=>{
     this.props.history.push('/admin/author/')
-  
-  
+  }
+  bookpath=()=>{
+    this.props.history.push('/admin/book/')
   }
   
     handledeletecate=(index)=>{
@@ -53,7 +54,6 @@ class AdminCate extends Component{
       }).catch(error=>
       {
         console.log(error);
-        
       })
   
     }
@@ -72,12 +72,12 @@ class AdminCate extends Component{
         <br/>
     <ButtonGroup size="lg" className="mb-2">
       <Button variant="light" className="btns" onClick={this.catepath}>Categories</Button>
-      <Button variant="light" className="btns">Books</Button>
+      <Button variant="light" className="btns" onClick={this.bookpath}>Books</Button>
       <Button variant="light"className="btns"onClick={this.authorspath}>Authors</Button>
     
     
     </ButtonGroup>
-    <Button onClick={this.onSubmit}>+
+    <Button  className="add" onClick={this.onSubmit}>Add
    </Button>
   </>
     

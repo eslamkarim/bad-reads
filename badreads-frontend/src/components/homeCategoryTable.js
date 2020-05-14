@@ -5,9 +5,7 @@ import './author.css'
 class HomeCategoryTable extends Component {
 
     render() {
-        let bUrl = `http://localhost:3000/category/${this.props.obj._id}`
-        console.log(this.props);
-        
+        let bUrl = `http://localhost:3000/category/${this.props.obj._id}`        
         return (
             <div key={this.props.id}>
                 <div className="card item-card-cat card-block">

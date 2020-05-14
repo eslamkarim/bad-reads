@@ -21,7 +21,6 @@ export default class Book_Page extends Component {
     axios.get(`http://127.0.0.1:4000/book/${this.props.match.params.id}`).then(
       res => {
         const data = res.data;        
-        console.log("data",data);
         const { bookName, img, bookDescription, rating, author,  category} = data
         const {  authorName } = author
         const Author_Link = `/author/${author._id}`
@@ -52,7 +51,6 @@ export default class Book_Page extends Component {
       axios.get(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`)
       .then(res=>{
         this.setState({state: res.data})
-        console.log("STATE : ",res.data);
         
       }).catch(err=>{
         console.log(err);
@@ -74,8 +72,6 @@ export default class Book_Page extends Component {
       axios.post(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`,{
         rating: this.state.TempRating
       }).then(res => {
-        console.log(res);
-        console.log(res.data);
         this.get_book_data()
       }
       )
@@ -87,7 +83,6 @@ export default class Book_Page extends Component {
   clear_rating_book = () => {
     axios.delete(`http://127.0.0.1:4000/rate/${getUser().userId}/${this.props.match.params.id}`)
     .then(res=>{
-      console.log(res);
       this.get_book_data()
       this.setState({
         MyRating : -1
@@ -133,7 +128,6 @@ export default class Book_Page extends Component {
 
   deleteReview = reviewId => e => {
     if (getUser()){
-      console.log(reviewId);
       
       axios.delete(`http://127.0.0.1:4000/review/${getUser().userId}/${this.props.match.params.id}/${reviewId}`)
       .then(res=>{
@@ -151,7 +145,6 @@ export default class Book_Page extends Component {
       this.setState({state: event.target.value})
       axios.put(`http://127.0.0.1:4000/userBook/${getUser().userId}/${this.props.match.params.id}`,{action: event.target.value})
       .then(res=>{
-        console.log(res);
       }).catch(err=>{
         console.log(err);
         
@@ -165,7 +158,6 @@ export default class Book_Page extends Component {
     if (getUser()){
       axios.post(`http://127.0.0.1:4000/review/${getUser().userId}/${this.props.match.params.id}`,{review: this.state.review})
       .then(res=>{
-        console.log(res);
         this.setState({review: ""});
         this.get_book_data()
       }).catch(err=>{
@@ -180,7 +172,7 @@ export default class Book_Page extends Component {
   
   render() {
     const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, State, MyRating, TempRating, reviewsList } = this.state
-    console.log(this.props.match.params.id);
+    
     let myID = null
     if (getUser()){
       myID = getUser().userId
