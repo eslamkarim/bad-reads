@@ -53,7 +53,7 @@ class Register extends Component {
     }).then(response => {
       setUserSession(response.data.token, response.data.user);
       this.checkUser();
-      this.props.history.push('/dashboard');
+      this.props.history.push('/');
     }).catch(error => {
       this.setState({ error: error.response.data.message });
       this.setState({ errorStatus: error.response.data.error });
