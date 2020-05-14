@@ -10,33 +10,57 @@ export default class Category_books extends Component {
     this.getBooks()  
   }
   getBooks = () => {
-
-    // get category name
-    axios.get(`http://127.0.0.1:4000/category`)
+    const currentPage = this.props.match.params.pageid || 1
+    this.setState({
+      currentPage
+    })
+    // get category name  
+    axios.get(`http://127.0.0.1:4000/category/${this.props.match.params.id}/name`)
       .then(res=>{
-        console.log("test",res.data);
+        this.setState({
+          categoryName: res.data.categoryName
+        })
       }).catch(err=>{
         console.log(err);
       })
       
       // get category books
-      axios.get(`http://127.0.0.1:4000/category/${this.props.match.params.id}`)
+      axios.get(`http://127.0.0.1:4000/category/${this.props.match.params.id}/${currentPage}`)
       .then(res=>{
-        console.log(res.data);
+        if (res.data.length==0){
+            this.props.history.push(`/404`)
+        }
         this.setState({
           bookList: res.data
         })
       }).catch(err=>{
         console.log(err);
       })
+
+      axios.get(`http://127.0.0.1:4000/category/${this.props.match.params.id}/count`)
+      .then(res=>{
+        console.log(res.data);
+        this.setState({
+          pageCount: (res.data+5)/6
+        })
+      }).catch(err=>{
+        console.log(err);
+      })
+
   }
 
   state = {
-    categoryName: "programming",
-    bookList: []
+    categoryName: "",
+    bookList: [],
+    pageCount: 0,
+    currentPage: 1,
   }
   render() {
-    const { categoryName, bookList } = this.state
+    const { categoryName, bookList, currentPage } = this.state
+    const pageList = []
+    for (let i=1;i<=this.state.pageCount;++i){
+      pageList.push(i)
+    }
     return (
       <div class="container">
         <h1>{categoryName}</h1>
@@ -50,15 +74,11 @@ export default class Category_books extends Component {
           }
         </div>
         <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item "><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item active"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
+          {
+              pageList.map(pagerNum=>
+                <li class={'page-item '+ (currentPage == pagerNum ? 'active': '')}><a class="page-link" href={'/category/'+this.props.match.params.id+'/'+pagerNum}>{pagerNum}</a></li>
+              )
+          }
         </ul>
       </div>
     )

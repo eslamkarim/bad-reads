@@ -81,6 +81,7 @@ class App extends Component {
                      <Route exact path='/admin/category/update' component={AdminCateUpdate}/>
 
                     <Route exact path='/category/:id' render={(props) => <Category_books {...props} checkUser={this.checkUser.bind(this)} />} />
+                    <Route exact path='/category/:id/:pageid' render={(props) => <Category_books {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book' render={(props) => <Book {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/book/:id' render={(props) => <Book_Page {...props} checkUser={this.checkUser.bind(this)} />} />
                     <Route exact path='/404' render={(props) => <PageNotFound {...props} checkUser={this.checkUser.bind(this)} />} />
