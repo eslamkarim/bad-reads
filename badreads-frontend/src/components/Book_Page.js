@@ -8,12 +8,12 @@ import axios from 'axios';
 import { faStar, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getUser } from '../utils/common';
+
 export default class Book_Page extends Component {
 
   componentDidMount() {
     this.get_book_data()
   }
-
 
   get_book_data = ()=>{
     // get book data
@@ -56,7 +56,7 @@ export default class Book_Page extends Component {
       })
     }
 
-    // get revies for this book
+    // get reviews for this book
     axios.get(`http://127.0.0.1:4000/review/${this.props.match.params.id}`)
     .then(res=>{
       this.setState({reviewsList: res.data})
@@ -188,13 +188,13 @@ export default class Book_Page extends Component {
   }
 
   render() {
-    const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, reviewEditNum , MyRating, TempRating, reviewsList } = this.state    
+    const { bookName , img, authorName, Author_Link, rating, categoryName, Category_Link, reviewEditNum , MyRating, TempRating, reviewsList, bookDescription } = this.state    
     let myID = null
     if (getUser()){
       myID = getUser().userId
     }
     return (
-      <div className="container" id="book">
+      <div className="container book">
         <div className="row">
           <div className="col-2">
             <img id="bookImg" src={img} />
@@ -217,19 +217,19 @@ export default class Book_Page extends Component {
             </div>
           </div>
           <div className="col-9">
-            <h1 id="bookTitle" className="gr-h1 gr-h1--serif" itemProp="name">
+            <h1 id="bookTitle" className="gr-h1 gr-h1--serif book_title" itemProp="name">
                   {bookName}
             </h1>
             <div id="bookAuthors" className="">
               <span className="by">by</span>
               <span>
-                <div className="authorName__container">
+                <div className="authorName__container book_author">
                   <Link to={Author_Link}><span>{authorName}</span></Link> 
                 </div>
               </span>
             </div>
 
-            <div id="bookCategory" className="">
+            <div id="bookCategory " className="book_category">
               <span>
                 <div >
                   <Link to={Category_Link}><span>{categoryName}</span></Link> 
@@ -244,8 +244,8 @@ export default class Book_Page extends Component {
               <span ><FontAwesomeIcon icon={faStar} color={rating >= 4 ? "#FF9529": ""}/></span>
               <span ><FontAwesomeIcon icon={faStar} color={rating >= 5 ? "#FF9529": ""}/></span>
             </span>
-            <p>
-              A fascinating exploration of how insights from computer algorithms can be applied to our everyday lives, helping to solve common decision-making problems and illuminate the workings of the human mind
+            <p className="book_description">
+              {bookDescription}
             </p>
           </div>
         </div>
