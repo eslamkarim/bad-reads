@@ -31,9 +31,7 @@ var upload = multer({ storage: storage ,
 router.get('/author',async(req,res)=>{
 
    try{
-     const authors = await authModel.find({})
-     console.log(authors);
-     
+     const authors = await authModel.find({})     
      return res.json(authors)
         
     }
@@ -88,7 +86,6 @@ router.patch('/author/:id',upload.single('img'),async(req,res)=>{
 
 router.delete('/author/:id',async(req,res)=>{
     try {
-        console.log(req);
         const author = await authModel.findByIdAndDelete(req.params.id)
         return res.json(author)
         
@@ -99,25 +96,44 @@ router.delete('/author/:id',async(req,res)=>{
 
     
 })
-
+var storagebook = multer.diskStorage({
+    destination: function (req, file, cb) {
+    cb(null, 'public/books/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var uploadbook = multer({ storage: storagebook ,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg"|| file.mimetype == "image/gif") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return resp.status(401).json({
+                error: true,
+                message: "image must be .png .jpg or .jpeg!"
+            });
+        }
+    }
+});
 
 
 router.get('/book',async(req,res)=>{
 
     try{
-      const books = await bookModel.find({})
+      const books = await bookModel.find({}).populate('author').populate('category')
       return res.json(books)
-         
      }
-         catch (err)
-         {
-            res.send(err);
-         }
+    catch (err)
+    {
+        res.send(err);
+    }
   })
      
  
  
- router.post('/book',upload.single('img'),async(req,res,next)=>{
+ router.post('/book',uploadbook.single('img'),async(req,res,next)=>{
     const {bookName,author,category} = req.body;
     const url = req.protocol + '://' + req.get('host') + '/books/' + req.file.originalname 
     const bookInstance = new bookModel({
@@ -139,11 +155,15 @@ router.get('/book',async(req,res)=>{
  
     })
      
- router.patch('/book/:id',async(req,res)=>{
+ router.patch('/book/:id', uploadbook.single('img'),async(req,res)=>{
     try{
+        if(req.file){
+            req.body.img= req.protocol + '://' + req.get('host') + '/authors/' + req.file.originalname
+        }  
         const book = await bookModel.findByIdAndUpdate(req.params.id,{$set:req.body})    
         return res.json(book)  
     }catch(err){
+        console.log(err);
         res.send(err);
     } 
  })

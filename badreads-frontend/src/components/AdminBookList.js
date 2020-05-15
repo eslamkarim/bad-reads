@@ -14,8 +14,8 @@ class AdminBookList extends Component{
    
       <td>{this.props.details._id}</td>
       <td>{this.props.details.bookName}</td>
-      <td>{this.props.details.category}</td>
-      <td>{this.props.details.author}</td>
+      <td>{this.props.details.category.categoryName}</td>
+      <td>{this.props.details.author.authorName}</td>
 
       <td>{this.props.details.img}</td>
         

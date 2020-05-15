@@ -61,12 +61,12 @@ createSelectItems = () => {
    let items = []; 
    items.push(
     <Fragment>
-      <option value={null} disabled selected>Please Select an author</option>
+      <option key="nullauthor" value={null} disabled selected>Please Select an author</option>
     </Fragment>); 
   for (var i = 0; i < this.props.location.state.authors.length; i++){ 
   items.push(
   <Fragment>
-    <option value={this.props.location.state.authors[i]._id}>{this.props.location.state.authors[i].authorName}</option>
+    <option kaey={this.props.location.state.authors[i]._id} value={this.props.location.state.authors[i]._id}>{this.props.location.state.authors[i].authorName}</option>
   </Fragment>); 
 }
  return items; 
@@ -76,12 +76,12 @@ createCategoriesSelectItems = () => {
   let items = []; 
   items.push(
     <Fragment>
-      <option value={null} disabled selected>Please Select a category</option>
+      <option key="null" value={null} disabled selected>Please Select a category</option>
     </Fragment>); 
  for (var i = 0; i < this.props.location.state.categories.length; i++){ 
  items.push(
  <Fragment>
-   <option value={this.props.location.state.categories[i]._id}>{this.props.location.state.categories[i].categoryName}</option>
+   <option key={this.props.location.state.categories[i]._id} value={this.props.location.state.categories[i]._id}>{this.props.location.state.categories[i].categoryName}</option>
  </Fragment>); 
 }
 return items; 
